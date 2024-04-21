@@ -1,5 +1,6 @@
 {
-    "type": "zefiryn/power",
+    "name": "zefiryn/power",
+    "type": "project",
     "license": "proprietary",
     "minimum-stability": "stable",
     "prefer-stable": true,
