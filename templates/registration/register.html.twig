@@ -1,0 +1,36 @@
+{% extends 'layout/layout.html.twig' %}
+{% form_theme registrationForm 'tailwind_2_layout.html.twig' %}
+
+{% block content %}
+<div class="flex flex-col items-center justify-center w-screen h-screen bg-[url('/assets/images/auth/registration.png')] bg-cover bg-no-repeat bg-center ">
+    <div class="relative bg-[#d5eceb] border border-[#7dc4c2] shadow-lg p-12 min-w-[500px] min-h-[500px] max-w-full max-h-full">
+        <h1 class="text-2xl	text-sky-950 my-6">{{ 'User.register'|trans }}</h1>
+
+        <div class="">
+            {{ form_errors(registrationForm) }}
+
+            {{ form_start(registrationForm) }}
+                {{ form_row(registrationForm.username, {
+                    label: 'Form.field.username'|trans,
+                    row_class: 'my-3 min-w-[350px]',
+                    label_class: 'block',
+                    widget_class: 'px-1 h-[45px] w-full border border-[#7dc4c2] shadow-input',
+                }) }}
+                {{ form_row(registrationForm.plainPassword, {
+                    label: 'Form.field.password'|trans,
+                    row_class: 'my-3 min-w-[350px]',
+                    label_class: 'block',
+                    widget_class: 'px-1  h-[45px] w-full border border-[#7dc4c2] shadow-input',
+                }) }}
+
+                <button type="submit" class="rounded-sm	py-3 px-8 mt-3
+                        bg-[#FEA524] text-zinc-800 hover:bg-[#FEBA57] hover:text-zinc-600
+                        transition-all duration-200 ease-in"
+                >
+                    {{ 'Form.field.register'|trans }}
+                </button>
+            {{ form_end(registrationForm) }}
+        </div>
+    </div>
+</div>
+{% endblock %}

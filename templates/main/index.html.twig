@@ -1,11 +1,11 @@
 {% extends 'layout/layout.html.twig' %}
 
 {% block content %}
-    <div class="flex flex-col items-center justify-center w-screen h-screen">
-        <div class="relative">
-            <img src="{{ asset('images/main/meter-main.jpg') }}" alt="Symfony!"/>
+    <div class="flex flex-col items-center justify-center w-screen h-screen bg-[url('/assets/images/main/meter-main.jpg')] bg-cover bg-no-repeat bg-center">
+        <div class="flex flex-col items-center justify-evenly bg-[#c7cdef] border border-[#131a41] shadow-lg p-6 lg:p-12 min-w-[500px] min-h-[650px] lg:min-h-[500px] max-w-full max-h-full">
+            <h1 class="text-sky-950 text-4xl mb-3">{{ 'Application.name'|trans }}</h1>
             <form type="POST" action="{{ path('login', {_locale: app.request.locale}) }}"
-                  class="block absolute w-2/3 min-w-20 top-[calc(66.666%-5rem)] mx-[calc((100%-66.666667%)/2)] text-center">
+                  class="block w-full text-center">
                 <input
                     class="w-full h-12 shadow-md rounded shadow-slate-500"
                     name="password" id="password" type="password" placeholder="{{ 'Form.field.password'|trans }}"/>
@@ -17,6 +17,6 @@
                 </button>
             </form>
         </div>
-        <h1 class="text-sky-900 text-6xl">{{ 'Application.name'|trans }}</h1>
+        <p class="text-[0.5rem] text-right">Image by pch.vector on Freepik</p>
     </div>
 {% endblock %}

@@ -1,11 +1,15 @@
 Application:
-  name: "Zużycie prądu"
+  name: "Mały Inkasent"
+  title: "Mały Inkasent Prądowy"
 
 
 User:
   login: "Zaloguj się"
+  register: "Rejestracja"
 
 Form:
   field:
     submit_login: "Zaloguj"
     password: "Hasło"
+    username: "Nazwa użytkownika"
+    register: "Zarejestruj"

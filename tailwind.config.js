@@ -5,7 +5,14 @@ module.exports = {
     "./templates/**/*.html.twig",
   ],
   theme: {
-    extend: {},
+    fontFamily: {
+      'sans': ['Comfortaa', 'Montserrat', 'sans-serif'],
+    },
+    extend: {
+      boxShadow: {
+        'input': 'inset 2px 2px 5px 1px rgb(0 0 0 / 0.15)'
+      }
+    },
   },
   plugins: [
     require('tailwind-fontawesome')

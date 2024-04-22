@@ -23,3 +23,44 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer base {
+    @font-face {
+        font-family: 'Montserrat';
+        font-style: normal;
+        font-display: swap;
+        src: url("/assets/fonts/Montserrat-VariableFont_wght.ttf") format('truetype');
+    }
+
+    @font-face {
+        font-family: 'Comfortaa';
+        font-style: normal;
+        font-weight: 400;
+        font-display: swap;
+        src: url("/assets/fonts/Comfortaa-Regular.ttf") format('truetype');
+    }
+
+    @font-face {
+        font-family: 'Comfortaa';
+        font-style: normal;
+        font-weight: 500;
+        font-display: swap;
+        src: url("/assets/fonts/Comfortaa-Medium.ttf") format('truetype');
+    }
+
+    @font-face {
+        font-family: 'Comfortaa';
+        font-style: normal;
+        font-weight: 600;
+        font-display: swap;
+        src: url("/assets/fonts/Comfortaa-SemiBold.ttf") format('truetype');
+    }
+
+    @font-face {
+        font-family: 'Comfortaa';
+        font-style: normal;
+        font-weight: 700;
+        font-display: swap;
+        src: url("/assets/fonts/Comfortaa-Bold.ttf") format('truetype');
+    }
+}

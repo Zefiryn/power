@@ -1,10 +1,14 @@
 Application:
   name: "My power consumption"
+  title: "Power consumption Tracker"
 
 User:
   login: "Log in"
+  register: "Registration"
 
 Form:
   field:
     submit_login: 'Log in'
     password: 'Password'
+    username: "Username"
+    register: "Register"
