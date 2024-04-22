@@ -15,14 +15,13 @@ class AuthController extends AbstractController
 
     public function __construct(LocaleSwitcher $localeSwitcher)
     {
-
         $this->localeSwitcher = $localeSwitcher;
     }
 
-    #[Route('/{_locale}/login', name: 'login')]
+    #[Route('/{_locale}/login', name: 'login', requirements: ['_locale' => '%app.supported_locales_regex%'])]
     public function login(): Response
     {
         $params = ['_locale' => $this->localeSwitcher->getLocale()];
-        return $this->redirectToRoute('homepage', $params);
+        return $this->redirectToRoute('dashboard', $params);
     }
 }
