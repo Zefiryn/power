@@ -1,0 +1,11 @@
+Application:
+  name: "Zużycie prądu"
+
+
+User:
+  login: "Zaloguj się"
+
+Form:
+  field:
+    submit_login: "Zaloguj"
+    password: "Hasło"

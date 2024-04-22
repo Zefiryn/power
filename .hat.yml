@@ -1,0 +1,36 @@
+projectSlug: power
+slug: power
+projectDomain: power.test
+containerName: power_symfony
+type: symfony7
+dbName: power
+dbPass: admin
+dbUser: power
+dbHost: mysql
+useDelegatedMount: true
+noDefaultMounted: true
+sshKeyPath: ~/.ssh
+useComposerCache: true
+dbUseContainer: false
+dockerCompose: true
+verboseExec: true
+host: host.docker.internal
+magentoUseTailwind: false
+autostart: true
+imageVersion: hatimeria/php82:nodb
+useTraefik: true
+useSsl: true
+dbDisable: false
+skipNpm: true
+phpVersion: "/usr/bin/php8.2"
+composerInstallDev: true
+mountedFolders:
+  - assets
+  - src
+  - config
+  - migrations
+  - tests
+  - translations
+  - templates
+  - var
+  - public

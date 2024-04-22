@@ -1,3 +1,25 @@
-body {
-    background-color: skyblue;
+::placeholder {
+    text-align: center;
 }
+
+/* or, for legacy browsers */
+
+::-webkit-input-placeholder {
+    text-align: center;
+}
+
+:-moz-placeholder { /* Firefox 18- */
+    text-align: center;
+}
+
+::-moz-placeholder {  /* Firefox 19+ */
+    text-align: center;
+}
+
+:-ms-input-placeholder {
+    text-align: center;
+}
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;

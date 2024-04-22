@@ -1,0 +1,14 @@
+version: "3"
+services:
+    mysql:
+        image: postgres:13.4-alpine
+        restart: always
+        defaultPort: "5432"
+        ports:
+            - "5432"
+        volumes:
+            - db:/var/lib/postgresql/data:rw
+        environment:
+            - 'POSTGRES_DB=power'
+            - 'POSTGRES_PASSWORD=admin'
+            - 'POSTGRES_USER=power'

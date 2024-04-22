@@ -1,0 +1,10 @@
+Application:
+  name: "My power consumption"
+
+User:
+  login: "Log in"
+
+Form:
+  field:
+    submit_login: 'Log in'
+    password: 'Password'
