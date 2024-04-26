@@ -1,12 +1,11 @@
 {% extends 'layout/layout.html.twig' %}
-{% form_theme registrationForm 'tailwind_2_layout.html.twig' %}
 
 {% block content %}
 <div class="flex flex-col items-center justify-center w-screen h-screen bg-[url('/assets/images/auth/registration.png')] bg-cover bg-no-repeat bg-center ">
     <div class="relative bg-[#d5eceb] border border-[#7dc4c2] shadow-lg p-12 min-w-[500px] min-h-[500px] max-w-full max-h-full">
         <h1 class="text-2xl	text-sky-950 my-6">{{ 'User.register'|trans }}</h1>
 
-        <div class="">
+        <div>
             {{ form_errors(registrationForm) }}
 
             {{ form_start(registrationForm) }}

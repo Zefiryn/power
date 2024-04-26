@@ -2,10 +2,26 @@ Application:
   name: "Mały Inkasent"
   title: "Mały Inkasent Prądowy"
 
+Dashboard:
+  header: "Najnowsze odczyty"
+  table:
+    date: "Data"
+    value: "Wartość"
+    change: "Zużycie"
+
 
 User:
   login: "Zaloguj się"
   register: "Rejestracja"
+
+Reading:
+  add: "Dodaj odczyt"
+  create: "Nowy odczyt"
+  summary:
+    label: "Podsumowanie"
+    sum: "Łączne zużycie"
+    average: "Średnie zużycie"
+    median: "Mediana zużycia"
 
 Form:
   field:
@@ -13,3 +29,6 @@ Form:
     password: "Hasło"
     username: "Nazwa użytkownika"
     register: "Zarejestruj"
+    value: "Odczyt"
+    date: "Data"
+    save_reading: "Zapisz"

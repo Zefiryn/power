@@ -4,11 +4,20 @@
     <div class="flex flex-col items-center justify-center w-screen h-screen bg-[url('/assets/images/main/meter-main.jpg')] bg-cover bg-no-repeat bg-center">
         <div class="flex flex-col items-center justify-evenly bg-[#c7cdef] border border-[#131a41] shadow-lg p-6 lg:p-12 min-w-[500px] min-h-[650px] lg:min-h-[500px] max-w-full max-h-full">
             <h1 class="text-sky-950 text-4xl mb-3">{{ 'Application.name'|trans }}</h1>
-            <form type="POST" action="{{ path('login', {_locale: app.request.locale}) }}"
+            <form method="POST" action="{{ path('homepage', {_locale: app.request.locale}) }}"
                   class="block w-full text-center">
+                {% if error %}
+                    <div>{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+                {% endif %}
+                <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}" />
+
                 <input
-                    class="w-full h-12 shadow-md rounded shadow-slate-500"
-                    name="password" id="password" type="password" placeholder="{{ 'Form.field.password'|trans }}"/>
+                    class="w-full h-12 shadow-md rounded shadow-slate-500 mb-5 text-center"
+                    name="_username" id="username" type="text" placeholder="{{ 'Form.field.username'|trans }}" value="{{ last_username }}" />
+
+                <input
+                    class="w-full h-12 shadow-md rounded shadow-slate-500 text-center"
+                    name="_password" id="password" type="password" placeholder="{{ 'Form.field.password'|trans }}"/>
                 <button type="submit" class="rounded-sm	py-3 px-8 mt-3
                     bg-[#FEA524] text-zinc-800 hover:bg-[#FEBA57] hover:text-zinc-600
                     transition-all duration-200 ease-in"

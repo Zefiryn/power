@@ -5,24 +5,35 @@ declare(strict_types=1);
 namespace App\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Bridge\Twig\Attribute\Template;
-use Symfony\Component\Translation\LocaleSwitcher;
+use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
+use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
 class MainController extends AbstractController
 {
     #[Route('/', name: 'default_homepage')]
     #[Route('/{_locale}', name: 'homepage', requirements: ['_locale' => '%app.supported_locales_regex%'])]
     #[Template('main/index.html.twig')]
-    public function index(): array
+    public function index(AuthenticationUtils $authenticationUtils, AuthorizationCheckerInterface $authorizationChecker): array|RedirectResponse
     {
-        return [];
+        if ($authorizationChecker->isGranted('ROLE_USER')) {
+            return $this->redirectToRoute('dashboard');
+        }
+
+        // get the login error if there is one
+        $error = $authenticationUtils->getLastAuthenticationError();
+
+        // last username entered by the user
+        $lastUsername = $authenticationUtils->getLastUsername();
+
+        return ['last_username' => $lastUsername, 'error' => $error];
     }
 
-    #[Route('/{_locale}/dashboard', name: 'dashboard', requirements: ['_locale' => '%app.supported_locales_regex%'])]
-    #[Template('main/dashboard.html.twig')]
-    public function dashboard(): array
+    #[Route(path: '/{_locale}/logout', name: 'app_logout', requirements: ['_locale' => '%app.supported_locales_regex%'])]
+    public function logout(): void
     {
-        return [];
+        throw new \LogicException('This method can be blank - it will be intercepted by the logout key on your firewall.');
     }
 }
