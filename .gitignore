@@ -4,6 +4,7 @@ composer.phar
 .env
 auth.json
 var/
+deploy-power/prod/alpha/app/dist
 
 ###> phpunit/phpunit ###
 /phpunit.xml

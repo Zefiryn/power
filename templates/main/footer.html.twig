@@ -1,0 +1,8 @@
+<div class="mt-auto left-0 z-50 w-full h-16 border-t bg-stone-600 border-stone-500">
+    <div class="grid h-full max-w-lg grid-cols-4 mx-auto font-medium">
+        {{ include('main/footer/menu-section.html.twig', {route: 'dashboard', label: "Menu.dashboard", icon: 'home'}) }}
+        {{ include('main/footer/menu-section.html.twig', {route: 'readings', label: "Menu.readings", icon: 'readings'}) }}
+        {{ include('main/footer/menu-section.html.twig', {route: 'tags', label: "Menu.tags", icon: 'tags'}) }}
+        {{ include('main/footer/menu-section.html.twig', {route: 'analysis', label: "Menu.charts", icon: 'charts'}) }}
+    </div>
+</div>

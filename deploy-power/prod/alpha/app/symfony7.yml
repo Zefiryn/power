@@ -1,0 +1,13 @@
+localDependencies: false
+localNpmDependencies: false
+verboseExec: false
+buildNpm: true
+targetPath: /home/zefiryn/domains/power.jewula.net/app
+sshAccess: zefiryn@s0.mydevil.net
+gitTreeish: main
+phpVersion: php82
+ignore:
+  - .hat.yml
+  - docker-compose-project.yml
+sharedFiles:
+  - .env

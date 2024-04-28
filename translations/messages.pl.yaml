@@ -9,14 +9,24 @@ Dashboard:
     value: "Wartość"
     change: "Zużycie"
 
+Menu:
+  dashboard: "Główna"
+  readings: "Odczyty"
+  tags: "Tagi"
+  charts: "Analiza"
 
 User:
   login: "Zaloguj się"
   register: "Rejestracja"
 
 Reading:
+  header: "Odczyty"
   add: "Dodaj odczyt"
   create: "Nowy odczyt"
+  paginator:
+    page: "%current% z %last%"
+    previous: "Poprzenia strona"
+    next: "Następna strona"
   summary:
     label: "Podsumowanie"
     sum: "Łączne zużycie"

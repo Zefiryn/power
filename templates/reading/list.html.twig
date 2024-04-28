@@ -1,0 +1,31 @@
+<table class="table-auto border-spacing-4 border-collapse mx-auto shadow w-full">
+    <thead class="bg-stone-800">
+    <tr class="text-zinc-200">
+        <th class="border-0 border-slate-600 px-6 py-2 w-[40%]">{{ 'Dashboard.table.date'|trans }}</th>
+        <th class="border-0 border-slate-600 px-6 py-2 w-[30%]">{{ 'Dashboard.table.value'|trans }}</th>
+        <th class="border-0 border-slate-600 px-6 py-2 w-[30%]">{{ 'Dashboard.table.change'|trans }}</th>
+    </tr>
+    </thead>
+    <tbody class="bg-zinc-100">
+    {% set nextIterator = 1 %}
+    {% for reading in readings %}
+        {% if loop.last %}
+        {% else %}
+            {% if readings[nextIterator] is defined %}
+                {% set previousReading = readings[nextIterator] %}
+            {% else %}
+                {% set previousReading = false %}
+            {% endif %}
+            <tr>
+                <td class="{% if loop.first == false %}border-t border-stone-300{% endif %} {% if loop.index is divisible by(2) %}bg-[#e4dfdb]{% endif %} px-6 py-2">{{ reading.getDate()|date("Y-m-d H:i") }}</td>
+                <td class="{% if loop.first == false %}border-t border-stone-300{% endif %} {% if loop.index is divisible by(2) %}bg-[#e4dfdb]{% endif %} px-6 py-2">{{ reading.getValue() / 10 }}</td>
+                <td class="{% if loop.first == false %}border-t border-stone-300{% endif %} {% if loop.index is divisible by(2) %}bg-[#e4dfdb]{% endif %} px-6 py-2">
+                    {{ previousReading ? (reading.getValue() - previousReading.getValue()) / 10 : '&mdash;' }}
+                    <span class="text-[0.7rem]">kWh</span>
+                </td>
+            </tr>
+            {% set nextIterator = (nextIterator + 1) %}
+        {% endif %}
+    {% endfor %}
+    </tbody>
+</table>

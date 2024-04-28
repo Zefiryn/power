@@ -21,9 +21,17 @@ class ReadingRepository extends ServiceEntityRepository
         parent::__construct($registry, Reading::class);
     }
 
+    public function findRecords(): \Doctrine\ORM\Query
+    {
+        return $this->createQueryBuilder('r')
+            ->orderBy('r.date', 'DESC')
+            ->getQuery();
+    }
+
     public function findLatestRecords(int $limit): array
     {
         $connection = $this->getEntityManager()->getConnection();
+
         return $connection->executeQuery(
             'SELECT
                     (reading.date::date) AS date,

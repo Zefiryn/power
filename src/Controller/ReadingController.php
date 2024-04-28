@@ -4,13 +4,15 @@ namespace App\Controller;
 
 use App\Entity\Reading;
 use App\Form\ReadingType;
+use App\Repository\ReadingRepository;
+use App\Utils\Paginator;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bridge\Twig\Attribute\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
-use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 #[IsGranted('ROLE_USER')]
 class ReadingController extends AbstractController
@@ -18,16 +20,22 @@ class ReadingController extends AbstractController
     #[Route('/{_locale}/reading', name: 'readings')]
     #[Template('reading/index.html.twig')]
     public function index(
-        EntityManagerInterface $entityManager,
-        ValidatorInterface $validator
+        Request $request,
+        ReadingRepository $readingRepository,
+        Paginator $paginator
     ): array
     {
-        return [];
+        $records = $readingRepository->findRecords();
+        $paginator->paginate($records, max(1, $request->query->getInt('page', 1)));
+
+        return [
+            'paginator' => $paginator
+        ];
     }
 
     #[Route('/{_locale}/reading/new', name: 'new_reading', requirements: ['_locale' => '%app.supported_locales_regex%'])]
     #[Template('reading/edit.html.twig')]
-    public function create(Request $request, EntityManagerInterface $entityManager): mixed
+    public function create(Request $request, EntityManagerInterface $entityManager): Response|array
     {
         $reading = new Reading();
         $form = $this->createForm(ReadingType::class, $reading);
