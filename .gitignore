@@ -2,6 +2,7 @@ vendor/
 .idea/
 composer.phar
 .env
+.env.prod
 auth.json
 var/
 deploy-power/prod/alpha/app/dist
