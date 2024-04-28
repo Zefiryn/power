@@ -17,9 +17,22 @@
             <tbody class="bg-zinc-100">
             {% for reading in readings %}
                 <tr>
-                    <td class="{% if loop.first == false %}border-t border-stone-300{% endif %} {% if loop.index is divisible by(2) %}bg-[#e4dfdb]{% endif %} px-6 py-2">{{ reading.date }}</td>
-                    <td class="{% if loop.first == false %}border-t border-stone-300{% endif %} {% if loop.index is divisible by(2) %}bg-[#e4dfdb]{% endif %} px-6 py-2">{{ reading.value / 10 }}</td>
-                    <td class="{% if loop.first == false %}border-t border-stone-300{% endif %} {% if loop.index is divisible by(2) %}bg-[#e4dfdb]{% endif %} px-6 py-2">
+                    <td class="
+                            {% if loop.first == false %}border-t border-stone-300{% endif %}
+                            {% if loop.index is divisible by(2) %}bg-[#e4dfdb]{% endif %} px-6 py-2
+                    ">
+                        {{ reading.date }}
+                    </td>
+                    <td class="
+                            {% if loop.first == false %}border-t border-stone-300{% endif %}
+                            {% if loop.index is divisible by(2) %}bg-[#e4dfdb]{% endif %} px-6 py-2
+                    ">
+                        {{ '%.1f'|format(reading.value / 10) }}
+                    </td>
+                    <td class="
+                            {% if loop.first == false %}border-t border-stone-300{% endif %}
+                            {% if loop.index is divisible by(2) %}bg-[#e4dfdb]{% endif %} px-6 py-2
+                    ">
                         {{ reading.usage ? reading.usage / 10 : '&mdash;' }}
                         <span class="text-[0.7rem]">kWh</span>
                     </td>

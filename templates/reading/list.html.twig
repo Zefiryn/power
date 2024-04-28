@@ -17,9 +17,22 @@
                 {% set previousReading = false %}
             {% endif %}
             <tr>
-                <td class="{% if loop.first == false %}border-t border-stone-300{% endif %} {% if loop.index is divisible by(2) %}bg-[#e4dfdb]{% endif %} px-6 py-2">{{ reading.getDate()|date("Y-m-d H:i") }}</td>
-                <td class="{% if loop.first == false %}border-t border-stone-300{% endif %} {% if loop.index is divisible by(2) %}bg-[#e4dfdb]{% endif %} px-6 py-2">{{ reading.getValue() / 10 }}</td>
-                <td class="{% if loop.first == false %}border-t border-stone-300{% endif %} {% if loop.index is divisible by(2) %}bg-[#e4dfdb]{% endif %} px-6 py-2">
+                <td class="
+                    {% if loop.first == false %}border-t border-stone-300{% endif %}
+                    {% if loop.index is divisible by(2) %}bg-[#e4dfdb]{% endif %} px-6 py-2
+                ">
+                    {{ reading.getDate()|date("Y-m-d H:i") }}
+                </td>
+                <td class="
+                    {% if loop.first == false %}border-t border-stone-300{% endif %}
+                    {% if loop.index is divisible by(2) %}bg-[#e4dfdb]{% endif %} px-6 py-2
+                ">
+                    {{ '%.1f'|format(reading.getValue() / 10) }}
+                </td>
+                <td class="
+                    {% if loop.first == false %}border-t border-stone-300{% endif %}
+                    {% if loop.index is divisible by(2) %}bg-[#e4dfdb]{% endif %} px-6 py-2
+                ">
                     {{ previousReading ? (reading.getValue() - previousReading.getValue()) / 10 : '&mdash;' }}
                     <span class="text-[0.7rem]">kWh</span>
                 </td>

@@ -6,9 +6,8 @@ targetPath: /home/zefiryn/domains/power.jewula.net/app
 sshAccess: zefiryn@s0.mydevil.net
 gitTreeish: main
 phpVersion: php82
+cleanOpcache: true
 composerName: composer2
 ignore:
   - .hat.yml
   - docker-compose-project.yml
-sharedFiles:
-  - .env
