@@ -1,9 +1,10 @@
 <a href="{{ path(route, {_locale: app.request.locale}) }}"
    class="inline-flex flex-col items-center justify-center px-5
+        hover:bg-stone-700 hover:text-gray-200
         {% if app.request.get('_route') is same as route %}
         bg-stone-800 text-gray-200
         {% else %}
-        text-neutral-400 hover:bg-stone-800 hover:text-gray-200
+        text-neutral-400
         {% endif %}">
     <svg class="w-5 h-5 mb-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
         {% if icon is same as('home')  %}

@@ -2,6 +2,8 @@
 
 {% block body %}
     {{ include('main/header.html.twig') }}
-    {% block content %}{% endblock %}
+    <div class="mb-[140px]">
+        {% block content %}{% endblock %}
+    </div>
     {{ include('main/footer.html.twig') }}
 {% endblock %}
