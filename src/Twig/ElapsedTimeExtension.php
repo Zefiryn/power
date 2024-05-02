@@ -23,8 +23,8 @@ class ElapsedTimeExtension extends AbstractExtension
             $seconds = $reference->getTimestamp() - $endTime->getTimestamp();
         }
         $hours = floor($seconds / 3600);
-        $minutes = ceil($seconds - ($hours * 3600)) / 60;
+        $minutes = ceil(ceil($seconds - ($hours * 3600)) / 60);
 
-        return implode(':', [$hours, $minutes]);
+        return implode(':', [$hours, $minutes < 10 ? '0' . $minutes : $minutes]);
     }
 }
