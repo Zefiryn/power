@@ -1,9 +1,7 @@
 import { Controller } from '@hotwired/stimulus';
 
 export default class extends Controller {
-    connect() {
-
-    }
+    connect() {}
 
     toggle() {
         this.element.querySelectorAll("[data-name='indicator']")[0].classList.toggle("rotate-180");
