@@ -36,7 +36,8 @@ class ReadingRepository extends ServiceEntityRepository
             'SELECT
                     (reading.date::date) AS date,
                     MAX(reading.value) AS value,
-                    MAX(reading.value) -  LEAD(MAX(reading.value)) OVER (ORDER BY date::date DESC) AS usage
+                    MAX(reading.value) -  LEAD(MAX(reading.value)) OVER (ORDER BY date::date DESC) AS usage,
+                    EXTRACT(EPOCH FROM (MAX(reading.date) -  LEAD(MAX(reading.date)) OVER (ORDER BY date::date DESC))) AS time
                 FROM reading 
                 GROUP BY date::date 
                 ORDER BY date::date DESC 

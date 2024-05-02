@@ -16,7 +16,7 @@
             </thead>
             <tbody class="bg-zinc-100">
             {% for reading in readings %}
-                <tr>
+                <tr data-controller="reading-row" class="cursor-pointer" data-action="click->reading-row#toggle">
                     <td class="
                             {% if loop.first == false %}border-t border-stone-300{% endif %}
                             {% if loop.index is divisible by(2) %}bg-[#e4dfdb]{% endif %} px-6 py-2
@@ -31,10 +31,30 @@
                     </td>
                     <td class="
                             {% if loop.first == false %}border-t border-stone-300{% endif %}
-                            {% if loop.index is divisible by(2) %}bg-[#e4dfdb]{% endif %} px-6 py-2
+                            {% if loop.index is divisible by(2) %}bg-[#e4dfdb]{% endif %} px-6 py-2 pr-3
                     ">
-                        {{ reading.usage ? reading.usage / 10 : '&mdash;' }}
-                        <span class="text-[0.7rem]">kWh</span>
+                        <div>
+                            <span class="inline-block">{{ reading.usage ? reading.usage / 10 : '&mdash;' }}<span class="text-[0.7rem]">kWh</span></span>
+                            <span class="inline-block float-right mt-[5px] rotate-180 transition-all duration-[400ms] ease-in-out" data-name="indicator">
+                                <svg class="w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 8">
+                                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7 7.674 1.3a.91.91 0 0 0-1.348 0L1 7"/>
+                                </svg>
+                            </span>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="3" class="text-right {% if loop.index is divisible by(2) %}bg-[#e4dfdb]{% endif %}">
+                        <div class="px-4 flex flex-row gap-[15px] w-full justify-end overflow-hidden transition-all transition-all duration-[400ms] ease-in-out" style="height: 0px;">
+                            <span class="text-[0.8rem] block">
+                            {{ 'Reading.day_average'|trans }}:
+                                {{ ((reading.usage/reading.time)*3600)|number_format(2)  }}<span class="text-[0.7rem]">kWh</span>
+                        </span>
+                            <span class="text-[0.8rem] block">
+                            {{ 'Reading.elapsed'|trans }}:
+                            {{ reading.time | elapseTime }}
+                        </span>
+                        </div>
                     </td>
                 </tr>
             {% endfor %}

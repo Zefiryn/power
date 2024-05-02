@@ -5,5 +5,7 @@
     <div class="mb-[140px]">
         {% block content %}{% endblock %}
     </div>
+    {% if app.request.get('_route') not in ['default_homepage', 'homepage']  %}
     {{ include('main/footer.html.twig') }}
+    {%  endif %}
 {% endblock %}

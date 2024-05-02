@@ -23,6 +23,8 @@ Reading:
   header: "Odczyty"
   add: "Dodaj odczyt"
   create: "Nowy odczyt"
+  elapsed: "Czas"
+  day_average: "Średnie zużycie"
   paginator:
     page: "%current% z %last%"
     previous: "Poprzenia strona"

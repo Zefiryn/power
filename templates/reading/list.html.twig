@@ -33,8 +33,19 @@
                     {% if loop.first == false %}border-t border-stone-300{% endif %}
                     {% if loop.index is divisible by(2) %}bg-[#e4dfdb]{% endif %} px-6 py-2
                 ">
-                    {{ previousReading ? (reading.getValue() - previousReading.getValue()) / 10 : '&mdash;' }}
-                    <span class="text-[0.7rem]">kWh</span>
+                    <span class="inline-block">{{ previousReading ? (reading.getValue() - previousReading.getValue()) / 10 : '&mdash;' }}<span class="text-[0.7rem]">kWh</span></span>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="3" class="text-right {% if loop.index is divisible by(2) %}bg-[#e4dfdb]{% endif %}">
+                    <div class="px-4 py-1 flex flex-row gap-[15px] w-full justify-end overflow-hidden transition-all transition-all duration-[400ms] ease-in-out">
+                        {% if previousReading %}
+                        <span class="text-[0.8rem] block">
+                            {{ 'Reading.elapsed'|trans }}:
+                            {{ reading.getDate().diff(previousReading.getDate())|elapseTime }}
+                        </span>
+                        {% endif %}
+                    </div>
                 </td>
             </tr>
             {% set nextIterator = (nextIterator + 1) %}

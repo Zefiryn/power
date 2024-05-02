@@ -12,3 +12,35 @@ Form:
     password: 'Password'
     username: "Username"
     register: "Register"
+    value: "Value"
+    date: "Date"
+    save_reading: "Save"
+
+Dashboard:
+  header: "Recent readings"
+  table:
+    date: "Date"
+    value: "Value"
+    change: "Usage"
+
+Menu:
+  dashboard: "Dashboard"
+  readings: "Readings"
+  tags: "Tags"
+  charts: "Analysis"
+
+Reading:
+  header: "Readings"
+  add: "Add record"
+  create: "New record"
+  elapsed: "Time"
+  day_average: "Average usage"
+  paginator:
+    page: "%current% of %last%"
+    previous: "Previous page"
+    next: "Next page"
+  summary:
+    label: "Summary"
+    sum: "Total usage"
+    average: "Average usage"
+    median: "Median usage"
