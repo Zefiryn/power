@@ -3,6 +3,7 @@ localNpmDependencies: true
 projectDomain: power.jewula.net
 verboseExec: false
 buildNpm: true
+restartFpm: false
 targetPath: /home/zefiryn/domains/power.jewula.net/app
 sshAccess: zefiryn@s0.mydevil.net
 gitTreeish: main
