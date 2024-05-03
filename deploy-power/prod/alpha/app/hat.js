@@ -14,7 +14,7 @@ module.exports = function (program, lwd) {
     async function afterInstallDependencies(data) {
         const container = data.container
         const path = `${container.containerWebRootProjectDir}`
-        container.exec(`cd ${path} && node node_modules/.bin/encore prod`, { silent: false })
+        container.exec(`cd ${path} && npm run build`, { silent: false })
     }
 
     eventEmitter.onEvent('after:container-created', function (globalEventData) {

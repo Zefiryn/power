@@ -38,8 +38,18 @@
             </tr>
             <tr>
                 <td colspan="3" class="text-right {% if loop.index is divisible by(2) %}bg-[#e4dfdb]{% endif %}">
-                    <div class="px-4 py-1 flex flex-row gap-[15px] w-full justify-end overflow-hidden transition-all transition-all duration-[400ms] ease-in-out">
-                        {% if previousReading %}
+                    <div class="px-4 py-1 flex flex-row gap-[15px] w-full justify-between">
+                        {% if not reading.getTags().isEmpty() %}
+                        <span class="text-[0.8rem]">
+                            <svg class="w-4 h-4 inline-block" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                              <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.583 8.445h.01M10.86 19.71l-6.573-6.63a.993.993 0 0 1 0-1.4l7.329-7.394A.98.98 0 0 1 12.31 4l5.734.007A1.968 1.968 0 0 1 20 5.983v5.5a.992.992 0 0 1-.316.727l-7.44 7.5a.974.974 0 0 1-1.384.001Z"/>
+                            </svg>
+                            {% for tag in reading.getTags() %}
+                                {{ tag.getName() }}
+                            {% endfor %}
+                            {% if previousReading %}
+                        </span>
+                        {% endif %}
                         <span class="text-[0.8rem] block">
                             {{ 'Reading.elapsed'|trans }}:
                             {{ reading.getDate().diff(previousReading.getDate())|elapseTime }}

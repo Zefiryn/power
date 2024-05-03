@@ -1,5 +1,5 @@
 localDependencies: false
-localNpmDependencies: false
+localNpmDependencies: true
 projectDomain: power.jewula.net
 verboseExec: false
 buildNpm: true

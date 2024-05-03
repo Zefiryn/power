@@ -26,7 +26,7 @@ class ReadingController extends AbstractController
     ): array
     {
         $records = $readingRepository->findRecords();
-        $paginator->paginate($records, max(1, $request->query->getInt('page', 1)));
+        $paginator->paginate($records, max(1, $request->query->getInt('page', 1)), 21, true);
 
         return [
             'paginator' => $paginator

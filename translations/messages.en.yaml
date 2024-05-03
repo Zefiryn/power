@@ -29,16 +29,17 @@ Menu:
   tags: "Tags"
   charts: "Analysis"
 
+Paginator:
+  page: "%current% of %last%"
+  previous: "Previous page"
+  next: "Next page"
+
 Reading:
   header: "Readings"
   add: "Add record"
   create: "New record"
   elapsed: "Time"
   day_average: "Average usage"
-  paginator:
-    page: "%current% of %last%"
-    previous: "Previous page"
-    next: "Next page"
   summary:
     label: "Summary"
     sum: "Total usage"

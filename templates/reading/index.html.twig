@@ -4,9 +4,9 @@
     <div class="pt-14 px-2 lg:pt-10 lg:px-0 text-center w-full lg:w-max lg:min-w-[600px] mx-auto mb-[10px]">
         <div class="flex flex-row justify-between gap-[100px] items-center mb-5">
             <h2 class="text-2xl">{{ 'Reading.header'|trans }}</h2>
-            {{ include('reading/add_button.html.twig') }}
+            {{ include('common/add_button.html.twig', {route: 'new_reading', label: 'Reading.add'}) }}
         </div>
         {{ include('reading/list.html.twig', {readings: paginator.items.getIterator}) }}
-        {% include 'reading/paginator.html.twig' %}
+        {% include 'common/paginator.html.twig' %}
     </div>
 {% endblock %}

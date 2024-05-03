@@ -16,15 +16,16 @@ class Paginator
 
     private ORMPaginator $items;
 
-    public function paginate(QueryBuilder|Query $query, int $page = 1, int $limit = 21): Paginator
+    public function paginate(QueryBuilder|Query $query, int $page = 1, int $limit = 20, bool $hideLast = false): Paginator
     {
+        $hideNumber = $hideLast ? 1 : 0;
         $this->currentPage = max(1, $page);
-        $this->limit = max(1, $limit - 1);
+        $this->limit = max(1, $limit - $hideNumber);
         $paginator = new ORMPaginator($query);
 
         $paginator
             ->getQuery()
-            ->setFirstResult(max(0,$limit * ($page - 1) - 1))
+            ->setFirstResult(max(0,$limit * ($page - 1) - $hideNumber))
             ->setMaxResults($limit);
 
         $this->total = $paginator->count();
@@ -52,5 +53,10 @@ class Paginator
     public function getItems(): ORMPaginator
     {
         return $this->items;
+    }
+
+    public function getLimit(): int
+    {
+        return $this->limit;
     }
 }

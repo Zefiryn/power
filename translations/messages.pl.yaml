@@ -19,21 +19,28 @@ User:
   login: "Zaloguj się"
   register: "Rejestracja"
 
+Paginator:
+  page: "%current% z %last%"
+  previous: "Poprzenia strona"
+  next: "Następna strona"
+
 Reading:
   header: "Odczyty"
   add: "Dodaj odczyt"
   create: "Nowy odczyt"
   elapsed: "Czas"
   day_average: "Średnie zużycie"
-  paginator:
-    page: "%current% z %last%"
-    previous: "Poprzenia strona"
-    next: "Następna strona"
   summary:
     label: "Podsumowanie"
     sum: "Łączne zużycie"
     average: "Średnie zużycie"
     median: "Mediana zużycia"
+
+Tag:
+  header: "Tagi"
+  add: "Nowy Tag"
+  create: "Stwórz tag"
+  list: "Tagi"
 
 Form:
   field:
@@ -43,4 +50,8 @@ Form:
     register: "Zarejestruj"
     value: "Odczyt"
     date: "Data"
+    tags: "Tagi"
     save_reading: "Zapisz"
+    name: "Nazwa"
+    slug: "Slug"
+    save_tag: "Zapisz tag"
