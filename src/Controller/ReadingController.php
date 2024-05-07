@@ -17,7 +17,7 @@ use Symfony\Component\Security\Http\Attribute\IsGranted;
 #[IsGranted('ROLE_USER')]
 class ReadingController extends AbstractController
 {
-    #[Route('/{_locale}/reading', name: 'readings')]
+    #[Route('/{_locale}/reading', name: 'readings', methods: ['GET'])]
     #[Template('reading/index.html.twig')]
     public function index(
         Request $request,
@@ -33,7 +33,7 @@ class ReadingController extends AbstractController
         ];
     }
 
-    #[Route('/{_locale}/reading/new', name: 'new_reading', requirements: ['_locale' => '%app.supported_locales_regex%'])]
+    #[Route('/{_locale}/reading/new', name: 'new_reading', requirements: ['_locale' => '%app.supported_locales_regex%'], methods: ['GET', 'POST'])]
     #[Template('reading/edit.html.twig')]
     public function create(Request $request, EntityManagerInterface $entityManager): Response|array
     {
@@ -53,5 +53,15 @@ class ReadingController extends AbstractController
         }
 
         return ['form' => $form];
+    }
+
+    #[Route('/{_locale}/reading/{id}/delete', name: 'remove_reading', requirements: ['_locale' => '%app.supported_locales_regex%'], methods: ['GET', 'DELETE'])]
+    public function remove(Request $request, ReadingRepository $readingRepository, EntityManagerInterface $entityManager): Response|array
+    {
+        $reading = $readingRepository->find($request->get('id'));
+        $entityManager->remove($reading);
+        $entityManager->flush();
+
+        return $this->redirectToRoute('readings');
     }
 }

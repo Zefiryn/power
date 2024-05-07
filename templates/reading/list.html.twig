@@ -1,9 +1,10 @@
 <table class="table-auto border-spacing-4 border-collapse mx-auto shadow w-full">
     <thead class="bg-stone-800">
     <tr class="text-zinc-200">
-        <th class="border-0 border-slate-600 px-6 py-2 w-[40%]">{{ 'Dashboard.table.date'|trans }}</th>
-        <th class="border-0 border-slate-600 px-6 py-2 w-[30%]">{{ 'Dashboard.table.value'|trans }}</th>
-        <th class="border-0 border-slate-600 px-6 py-2 w-[30%]">{{ 'Dashboard.table.change'|trans }}</th>
+        <th class="border-0 border-slate-600 px-6 py-2 w-[35%]">{{ 'Dashboard.table.date'|trans }}</th>
+        <th class="border-0 border-slate-600 px-6 py-2 w-[25%]">{{ 'Dashboard.table.value'|trans }}</th>
+        <th class="border-0 border-slate-600 px-6 py-2 w-[25%]">{{ 'Dashboard.table.change'|trans }}</th>
+        <th class="border-0 border-slate-600 px-6 py-2"></th>
     </tr>
     </thead>
     <tbody class="bg-zinc-100">
@@ -19,25 +20,40 @@
             <tr>
                 <td class="
                     {% if loop.first == false %}border-t border-stone-300{% endif %}
-                    {% if loop.index is divisible by(2) %}bg-[#e4dfdb]{% endif %} px-6 py-2
+                    {% if loop.index is divisible by(2) %}bg-[#e4dfdb]{% endif %} py-2
                 ">
                     {{ reading.getDate()|date("Y-m-d H:i") }}
                 </td>
                 <td class="
                     {% if loop.first == false %}border-t border-stone-300{% endif %}
-                    {% if loop.index is divisible by(2) %}bg-[#e4dfdb]{% endif %} px-6 py-2
+                    {% if loop.index is divisible by(2) %}bg-[#e4dfdb]{% endif %} px-4 py-2
                 ">
                     {{ '%.1f'|format(reading.getValue() / 10) }}
                 </td>
                 <td class="
                     {% if loop.first == false %}border-t border-stone-300{% endif %}
-                    {% if loop.index is divisible by(2) %}bg-[#e4dfdb]{% endif %} px-6 py-2
+                    {% if loop.index is divisible by(2) %}bg-[#e4dfdb]{% endif %} px-4 py-2
                 ">
                     <span class="inline-block">{{ previousReading ? (reading.getValue() - previousReading.getValue()) / 10 : '&mdash;' }}<span class="text-[0.7rem]">kWh</span></span>
                 </td>
+                <td class="
+                    {% if loop.first == false %}border-t border-stone-300{% endif %}
+                    {% if loop.index is divisible by(2) %}bg-[#e4dfdb]{% endif %} px-4 py-2
+                ">
+                    <div class="flex flex-row">
+                        <a href="{{ path('remove_reading', {id: reading.id, _locale: app.request.locale}) }}" class="block">
+                            <svg class="w-6 h-6 cursor-pointer" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 7h14m-9 3v8m4-8v8M10 3h4a1 1 0 0 1 1 1v3H9V4a1 1 0 0 1 1-1ZM6 7h12v13a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V7Z"/>
+                            </svg>
+                        </a>
+                        <svg class="w-6 h-6 cursor-pointer" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m14.304 4.844 2.852 2.852M7 7H4a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h11a1 1 0 0 0 1-1v-4.5m2.409-9.91a2.017 2.017 0 0 1 0 2.853l-6.844 6.844L8 14l.713-3.565 6.844-6.844a2.015 2.015 0 0 1 2.852 0Z"/>
+                        </svg>
+                    </div>
+                </td>
             </tr>
             <tr>
-                <td colspan="3" class="text-right {% if loop.index is divisible by(2) %}bg-[#e4dfdb]{% endif %}">
+                <td colspan="4" class="text-right {% if loop.index is divisible by(2) %}bg-[#e4dfdb]{% endif %}">
                     <div class="px-4 py-1 flex flex-row w-full justify-between ">
                         {% if not reading.getTags().isEmpty() %}
                         <span class="text-[0.8rem]">
