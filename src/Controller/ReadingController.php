@@ -55,10 +55,16 @@ class ReadingController extends AbstractController
         return ['form' => $form];
     }
 
-    #[Route('/{_locale}/reading/{id}/delete', name: 'remove_reading', requirements: ['_locale' => '%app.supported_locales_regex%'], methods: ['GET', 'DELETE'])]
+    #[Route('/{_locale}/reading/{id}/delete', name: 'remove_reading', requirements: ['_locale' => '%app.supported_locales_regex%'], methods: ['POST'])]
     public function remove(Request $request, ReadingRepository $readingRepository, EntityManagerInterface $entityManager): Response|array
     {
+        if (!$request->get('id')) {
+            return $this->redirectToRoute('readings');
+        }
         $reading = $readingRepository->find($request->get('id'));
+        if (!$reading) {
+            return $this->redirectToRoute('readings');
+        }
         $entityManager->remove($reading);
         $entityManager->flush();
 
