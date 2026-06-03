@@ -5,11 +5,11 @@ verboseExec: false
 buildNpm: true
 restartFpm: false
 targetPath: /home/zefiryn/domains/power.jewula.net/app
-sshAccess: zefiryn@s0.mydevil.net
+sshAccess: zefiryn@s72.mydevil.net
 gitTreeish: main
 phpVersion: php82
 cleanOpcache: true
-composerName: composer2
+composerName: composer
 ignore:
   - .hat.yml
   - docker-compose-project.yml
