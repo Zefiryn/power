@@ -11,7 +11,7 @@ use Doctrine\ORM\Mapping as ORM;
 class Tag
 {
     #[ORM\Id]
-    #[ORM\GeneratedValue]
+    #[ORM\GeneratedValue(strategy: 'SEQUENCE')]
     #[ORM\Column]
     private ?int $id = null;
 
@@ -98,5 +98,7 @@ class Tag
     public function setReadingCount(int $readingCount): static
     {
         $this->readingCount = $readingCount;
+
+        return $this;
     }
 }

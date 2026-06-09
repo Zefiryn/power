@@ -9,9 +9,12 @@ use Symfony\Component\Routing\Attribute\Route;
 
 class AnalysisController extends AbstractController
 {
+    /**
+     * @return array<string, mixed>
+     */
     #[Route('/{_locale}/analysis', name: 'analysis')]
     #[Template('analysis/index.html.twig')]
-    public function index(): Response|array
+    public function index(): array
     {
         return [];
     }

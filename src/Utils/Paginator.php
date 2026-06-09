@@ -14,6 +14,7 @@ class Paginator
     private int $currentPage;
     private int $limit;
 
+    /** @var ORMPaginator<mixed> */
     private ORMPaginator $items;
 
     public function paginate(QueryBuilder|Query $query, int $page = 1, int $limit = 20, bool $hideLast = false): Paginator
@@ -50,6 +51,7 @@ class Paginator
         return $this->lastPage;
     }
 
+    /** @return ORMPaginator<mixed> */
     public function getItems(): ORMPaginator
     {
         return $this->items;

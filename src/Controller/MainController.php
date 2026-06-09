@@ -6,6 +6,7 @@ namespace App\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Bridge\Twig\Attribute\Template;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
@@ -13,6 +14,9 @@ use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
 class MainController extends AbstractController
 {
+    /**
+     * @return RedirectResponse|array<string, mixed>
+     */
     #[Route('/', name: 'default_homepage')]
     #[Route('/{_locale}', name: 'homepage', requirements: ['_locale' => '%app.supported_locales_regex%'])]
     #[Template('main/index.html.twig')]

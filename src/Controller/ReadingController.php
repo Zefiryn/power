@@ -9,6 +9,7 @@ use App\Utils\Paginator;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bridge\Twig\Attribute\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
@@ -17,6 +18,9 @@ use Symfony\Component\Security\Http\Attribute\IsGranted;
 #[IsGranted('ROLE_USER')]
 class ReadingController extends AbstractController
 {
+    /**
+     * @return array<string, mixed>
+     */
     #[Route('/{_locale}/reading', name: 'readings', methods: ['GET'])]
     #[Template('reading/index.html.twig')]
     public function index(
@@ -33,6 +37,9 @@ class ReadingController extends AbstractController
         ];
     }
 
+    /**
+     * @return array<string, mixed>
+     */
     #[Route('/{_locale}/reading/new', name: 'new_reading', requirements: ['_locale' => '%app.supported_locales_regex%'], methods: ['GET', 'POST'])]
     #[Template('reading/edit.html.twig')]
     public function create(Request $request, EntityManagerInterface $entityManager): Response|array
@@ -56,7 +63,7 @@ class ReadingController extends AbstractController
     }
 
     #[Route('/{_locale}/reading/{id}/delete', name: 'remove_reading', requirements: ['_locale' => '%app.supported_locales_regex%'], methods: ['POST'])]
-    public function remove(Request $request, ReadingRepository $readingRepository, EntityManagerInterface $entityManager): Response|array
+    public function remove(Request $request, ReadingRepository $readingRepository, EntityManagerInterface $entityManager): RedirectResponse
     {
         if (!$request->get('id')) {
             return $this->redirectToRoute('readings');

@@ -15,7 +15,7 @@ class ElapsedTimeExtension extends AbstractExtension
         ];
     }
 
-    public function formatElapsedTime($seconds): string
+    public function formatElapsedTime(\DateInterval|string|int $seconds): string
     {
         if ($seconds instanceof \DateInterval) {
             $reference = new \DateTimeImmutable();

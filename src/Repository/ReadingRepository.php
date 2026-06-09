@@ -10,9 +10,9 @@ use Doctrine\Persistence\ManagerRegistry;
  * @extends ServiceEntityRepository<Reading>
  *
  * @method Reading|null find($id, $lockMode = null, $lockVersion = null)
- * @method Reading|null findOneBy(array $criteria, array $orderBy = null)
+ * @method Reading|null findOneBy(array<string, string> $criteria, array<string, string>|null $orderBy = null)
  * @method Reading[]    findAll()
- * @method Reading[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @method Reading[]    findBy(array<string, string> $criteria, array<string, string>|null $orderBy = null, $limit = null, $offset = null)
  */
 class ReadingRepository extends ServiceEntityRepository
 {
@@ -28,6 +28,7 @@ class ReadingRepository extends ServiceEntityRepository
             ->getQuery();
     }
 
+    /** @return array<array-key, mixed> */
     public function findLatestRecords(int $limit): array
     {
         $connection = $this->getEntityManager()->getConnection();

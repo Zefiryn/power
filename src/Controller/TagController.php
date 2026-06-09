@@ -15,6 +15,9 @@ use Symfony\Component\Routing\Attribute\Route;
 
 class TagController extends AbstractController
 {
+    /**
+     * @return Response|array<string, mixed>
+     */
     #[Route('/{_locale}/tag', name: 'tags')]
     #[Template('tag/index.html.twig')]
     public function index(
@@ -31,6 +34,9 @@ class TagController extends AbstractController
         ];
     }
 
+    /**
+     * @return Response|array<string, mixed>
+     */
     #[Route('/{_locale}/tag/new', name: 'new_tag', requirements: ['_locale' => '%app.supported_locales_regex%'])]
     #[Template('tag/edit.html.twig')]
     public function create(Request $request, EntityManagerInterface $entityManager): Response|array
