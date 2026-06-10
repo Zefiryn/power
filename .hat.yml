@@ -17,12 +17,12 @@ verboseExec: true
 host: host.docker.internal
 magentoUseTailwind: false
 autostart: true
-imageVersion: hatimeria/php82:nodb
+imageVersion: php84:nodb
 useTraefik: true
 useSsl: true
 dbDisable: false
 skipNpm: true
-phpVersion: "/usr/bin/php8.2"
+phpVersion: "/usr/bin/php8.4"
 composerInstallDev: true
 mountedFolders:
   - assets
