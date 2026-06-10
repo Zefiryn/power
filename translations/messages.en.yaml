@@ -15,6 +15,7 @@ Form:
     value: "Value"
     date: "Date"
     save_reading: "Save"
+    device: "Meter"
     tags: "Tags"
     name: "Name"
     slug: "Slug"
@@ -51,6 +52,7 @@ Reading:
   header: "Readings"
   add: "Add record"
   create: "New record"
+  edit: "Edit record"
   elapsed: "Time"
   day_average: "Average usage"
   summary:

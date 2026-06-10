@@ -47,22 +47,26 @@ class ReadingController extends AbstractController
     public function create(Request $request, EntityManagerInterface $entityManager): Response|array
     {
         $reading = new Reading();
-        $form = $this->createForm(ReadingType::class, $reading);
-        $form->handleRequest($request);
+        $reading->setDevice($entityManager->getRepository(Device::class)->findOneBy(['isCurrent' => true]));
+        return $this->prepareAndHandleReadingForm($reading, $request, $entityManager);
+    }
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $reading = $form->getData();
-            $reading->setDevice($entityManager->getRepository(Device::class)->findOneBy(['isCurrent' => true]));
-            if (!$reading->getDate()) {
-                $reading->setDate(new \DateTime());
-            }
-            $entityManager->persist($reading);
-            $entityManager->flush();
-
-            return $this->redirectToRoute('dashboard');
+    /**
+     * @return array<string, mixed>
+     */
+    #[Route('/{_locale}/reading/{id}/edit', name: 'edit_reading', requirements: ['_locale' => '%app.supported_locales_regex%'], methods: ['GET', 'POST'])]
+    #[Template('reading/edit.html.twig')]
+    public function edit(Request $request, ReadingRepository $readingRepository, EntityManagerInterface $entityManager): Response|array
+    {
+        if (!$request->get('id')) {
+            return $this->redirectToRoute('readings');
         }
 
-        return ['form' => $form];
+        $reading = $readingRepository->find($request->get('id'));
+        if (!$reading) {
+            return $this->redirectToRoute('readings');
+        }
+        return $this->prepareAndHandleReadingForm($reading, $request, $entityManager);
     }
 
     #[Route('/{_locale}/reading/{id}/delete', name: 'remove_reading', requirements: ['_locale' => '%app.supported_locales_regex%'], methods: ['POST'])]
@@ -79,5 +83,30 @@ class ReadingController extends AbstractController
         $entityManager->flush();
 
         return $this->redirectToRoute('readings');
+    }
+
+    /**
+     * @param Reading $reading
+     * @param Request $request
+     * @param EntityManagerInterface $entityManager
+     * @return array|RedirectResponse
+     */
+    protected function prepareAndHandleReadingForm(Reading $reading, Request $request, EntityManagerInterface $entityManager): array|RedirectResponse
+    {
+        $form = $this->createForm(ReadingType::class, $reading);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $reading = $form->getData();
+            if (!$reading->getDate()) {
+                $reading->setDate(new \DateTime());
+            }
+            $entityManager->persist($reading);
+            $entityManager->flush();
+
+            return $this->redirectToRoute('dashboard');
+        }
+
+        return ['form' => $form, 'is_edit' => !!$request->attributes->get('id')];
     }
 }

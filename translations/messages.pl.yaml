@@ -28,6 +28,7 @@ Reading:
   header: "Odczyty"
   add: "Dodaj odczyt"
   create: "Nowy odczyt"
+  edit: "Edytuj odczyt"
   elapsed: "Czas"
   day_average: "Średnie zużycie"
   summary:
@@ -54,6 +55,7 @@ Form:
     register: "Zarejestruj"
     value: "Odczyt"
     date: "Data"
+    device: "Miernik"
     tags: "Tagi"
     save_reading: "Zapisz"
     name: "Nazwa"

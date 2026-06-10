@@ -2,6 +2,7 @@
 
 namespace App\Form;
 
+use App\Entity\Device;
 use App\Entity\Reading;
 use App\Entity\Tag;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
@@ -24,6 +25,13 @@ class ReadingType extends AbstractType
                 'class' => Tag::class,
                 'choice_label' => 'name',
                 'multiple' => true,
+            ])
+            ->add('device', EntityType::class, [
+                'required' => true,
+                'class' => Device::class,
+                'choice_label' => 'id',
+                'multiple' => false,
+                'expanded' => true,
             ])
         ;
     }

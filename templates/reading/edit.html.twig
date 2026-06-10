@@ -2,7 +2,7 @@
 
 {% block content %}
     <div class="w-screen p-10 text-center">
-        <h1 class="text-2xl	text-sky-950 my-6">{{ 'Reading.create'|trans }}</h1>
+        <h1 class="text-2xl	text-sky-950 my-6">{% if is_edit %}{{ 'Reading.edit'|trans }}{% else %}{{ 'Reading.create'|trans }}{% endif %}</h1>
         {{ form_start(form) }}
         {{ form_row(form.value, {
             label: 'Form.field.value'|trans,
@@ -15,6 +15,11 @@
             row_class: 'my-3 min-w-[350px]',
             label_class: 'block',
             widget_class: 'px-1  h-[70px] w-full border border-stone-800 shadow-input text-center',
+        }) }}
+        {{ form_row(form.device, {
+            label: 'Form.field.device'|trans,
+            row_class: 'my-3 min-w-[350px]',
+            label_class: 'block',
         }) }}
         {{ form_row(form.tags, {
             label: 'Form.field.tags'|trans,

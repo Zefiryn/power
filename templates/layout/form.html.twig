@@ -1,1 +1,14 @@
 {% use 'tailwind_2_layout.html.twig' %}
+
+{%- block choice_widget_expanded -%}
+    {%- set attr = attr|merge({class: attr.class|default('mt-2')}) -%}
+    <div {{ block('widget_container_attributes') }}>
+        {%- for child in form %}
+            <div class="flex items-center justify-center gap-2">
+                {{- form_widget(child, {'attr': {'class': 'w-5 h-5 border-2 rounded-full'}}) -}}
+                {{- form_label(child, null, {translation_domain: choice_translation_domain}) -}}
+            </div>
+        {% endfor -%}
+    </div>
+{%- endblock choice_widget_expanded -%}
+
