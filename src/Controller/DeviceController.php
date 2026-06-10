@@ -2,7 +2,9 @@
 
 namespace App\Controller;
 
+use App\Entity\Device;
 use App\Entity\Tag;
+use App\Form\DeviceType;
 use App\Form\TagType;
 use App\Repository\TagRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -12,23 +14,26 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
-class TagController extends AbstractController
+class DeviceController extends AbstractController
 {
     /**
      * @return Response|array<string, mixed>
      */
-    #[Route('/{_locale}/tag/new', name: 'new_tag', requirements: ['_locale' => '%app.supported_locales_regex%'])]
-    #[Template('tag/edit.html.twig')]
+    #[Route('/{_locale}/device/new', name: 'new_device', requirements: ['_locale' => '%app.supported_locales_regex%'])]
+    #[Template('device/edit.html.twig')]
     public function create(Request $request, EntityManagerInterface $entityManager): Response|array
     {
-        $tag = new Tag();
-        $form = $this->createForm(TagType::class, $tag);
+        $device = new Device();
+        $form = $this->createForm(DeviceType::class, $device);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $tag = $form->getData();
-            $entityManager->persist($tag);
+            $device = $form->getData();
+            $entityManager->persist($device);
             $entityManager->flush();
+            if ($device->isCurrent()) {
+               $entityManager->getRepository(Device::class)->resetCurrentDevices($device->getId());
+            }
 
             return $this->redirectToRoute('settings');
         }

@@ -30,6 +30,10 @@ class Reading
     #[ORM\ManyToMany(targetEntity: Tag::class, inversedBy: 'readings')]
     private Collection $tags;
 
+    #[ORM\ManyToOne(inversedBy: 'readings')]
+    #[ORM\JoinColumn(name: 'device_id', referencedColumnName: 'id', onDelete: 'SET NULL')]
+    private ?Device $device = null;
+
     public function __construct()
     {
         $this->tags = new ArrayCollection();
@@ -94,6 +98,18 @@ class Reading
     public function removeTag(Tag $tag): static
     {
         $this->tags->removeElement($tag);
+
+        return $this;
+    }
+
+    public function getDevice(): ?Device
+    {
+        return $this->device;
+    }
+
+    public function setDevice(?Device $device): static
+    {
+        $this->device = $device;
 
         return $this;
     }

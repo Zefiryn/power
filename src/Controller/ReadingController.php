@@ -2,10 +2,11 @@
 
 namespace App\Controller;
 
+use App\Entity\Device;
 use App\Entity\Reading;
 use App\Form\ReadingType;
 use App\Repository\ReadingRepository;
-use App\Utils\Paginator;
+use App\Utils\PaginatorFactory;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bridge\Twig\Attribute\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -26,9 +27,10 @@ class ReadingController extends AbstractController
     public function index(
         Request $request,
         ReadingRepository $readingRepository,
-        Paginator $paginator
+        PaginatorFactory $paginatorFactory
     ): array
     {
+        $paginator = $paginatorFactory->createPaginator();
         $records = $readingRepository->findRecords();
         $paginator->paginate($records, max(1, $request->query->getInt('page', 1)), 21, true);
 
@@ -50,6 +52,7 @@ class ReadingController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $reading = $form->getData();
+            $reading->setDevice($entityManager->getRepository(Device::class)->findOneBy(['isCurrent' => true]));
             if (!$reading->getDate()) {
                 $reading->setDate(new \DateTime());
             }

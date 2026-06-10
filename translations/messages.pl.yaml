@@ -12,7 +12,7 @@ Dashboard:
 Menu:
   dashboard: "Główna"
   readings: "Odczyty"
-  tags: "Tagi"
+  settings: "Ustawienia"
   charts: "Analiza"
 
 User:
@@ -42,6 +42,10 @@ Tag:
   create: "Stwórz tag"
   list: "Tagi"
 
+Device:
+  create: "Dodaj miernik"
+  header: "Mierniki"
+
 Form:
   field:
     submit_login: "Zaloguj"
@@ -55,3 +59,5 @@ Form:
     name: "Nazwa"
     slug: "Slug"
     save_tag: "Zapisz tag"
+    save_device: "Zapisz"
+    is_current: "Aktywny"

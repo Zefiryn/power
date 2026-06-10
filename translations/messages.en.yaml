@@ -15,6 +15,12 @@ Form:
     value: "Value"
     date: "Date"
     save_reading: "Save"
+    tags: "Tags"
+    name: "Name"
+    slug: "Slug"
+    save_tag: "Save tag"
+    save_device: "Save"
+    is_current: "Active"
 
 Dashboard:
   header: "Recent readings"
@@ -26,13 +32,20 @@ Dashboard:
 Menu:
   dashboard: "Dashboard"
   readings: "Readings"
-  tags: "Tags"
+  settings: "Settings"
   charts: "Analysis"
 
 Paginator:
   page: "%current% of %last%"
   previous: "Previous page"
   next: "Next page"
+
+Tag:
+  header: "Tags"
+
+Device:
+  create: "Add meter"
+  header: "Devices"
 
 Reading:
   header: "Readings"

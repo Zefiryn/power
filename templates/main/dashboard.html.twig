@@ -33,13 +33,16 @@
                             {% if loop.first == false %}border-t border-stone-300{% endif %}
                             {% if loop.index is divisible by(2) %}bg-[#e4dfdb]{% endif %} px-6 py-2 pr-3
                     ">
+                        {% if reading.usage %}
                         <div>
                             <span class="inline-block">{{ reading.usage ? reading.usage / 10 : '&mdash;' }}<span class="text-[0.7rem]">kWh</span></span>
                         </div>
+                        {% endif %}
                     </td>
                 </tr>
                 <tr>
                     <td colspan="3" class="text-right {% if loop.index is divisible by(2) %}bg-[#e4dfdb]{% endif %}">
+                        {% if reading.time %}
                         <div class="px-6 py-1 flex flex-row gap-[15px] w-full justify-between">
                             <span class="text-[0.8rem] block">
                                 {{ 'Reading.elapsed'|trans }}:
@@ -50,6 +53,7 @@
                                 {{ ((reading.usage/reading.time)*360)|number_format(2)  }}<span class="text-[0.7rem]">kWh</span>
                             </span>
                         </div>
+                        {% endif %}
                     </td>
                 </tr>
             {% endfor %}

@@ -37,11 +37,11 @@ class ReadingRepository extends ServiceEntityRepository
             'SELECT
                     (reading.date::date) AS date,
                     MAX(reading.value) AS value,
-                    MAX(reading.value) -  LEAD(MAX(reading.value)) OVER (ORDER BY date::date DESC) AS usage,
-                    EXTRACT(EPOCH FROM (MAX(reading.date) -  LEAD(MAX(reading.date)) OVER (ORDER BY date::date DESC))) AS time
-                FROM reading 
-                GROUP BY date::date 
-                ORDER BY date::date DESC 
+                    COALESCE(MAX(reading.value) -  LEAD(MAX(reading.value)) OVER (PARTITION BY reading.device_id ORDER BY reading.date::date DESC), 0) AS usage,
+                    COALESCE(EXTRACT(EPOCH FROM (MAX(reading.date) -  LEAD(MAX(reading.date)) OVER (PARTITION BY reading.device_id ORDER BY reading.date::date DESC))), 0) AS time
+                FROM reading
+                GROUP BY reading.device_id, reading.date::date 
+                ORDER BY reading.date::date DESC 
                 limit :limit',
             ['limit' => $limit]
         )->fetchAllAssociative();

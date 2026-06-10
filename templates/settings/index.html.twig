@@ -1,0 +1,32 @@
+{% extends 'layout/layout.html.twig' %}
+
+{% block content %}
+    <div class="pt-14 px-2 lg:pt-10 lg:px-0 text-center w-full lg:w-max lg:min-w-[600px] mx-auto mb-[10px]">
+        <div class="flex flex-row justify-between gap-[100px] items-center mb-5">
+            <h2 class="text-2xl">{{ 'Tag.header'|trans }}</h2>
+            {{ include('common/add_button.html.twig', {route: 'new_tag', label: 'Tag.add'}) }}
+        </div>
+        {{ include('tag/list.html.twig', {tags: tags.items.getIterator}) }}
+        {{ include('common/paginator.html.twig', {paginator: tags}) }}
+    </div>
+
+    <div class="pt-14 px-2 lg:pt-10 lg:px-0 text-center w-full lg:w-max lg:min-w-[600px] mx-auto mb-[10px]">
+        <div class="flex flex-row justify-between gap-[100px] items-center mb-5">
+            <h2 class="text-2xl">{{ 'Device.header'|trans }}</h2>
+            {{ include('common/add_button.html.twig', {route: 'new_device', label: 'Device.add'}) }}
+        </div>
+        <ul>
+            {% for device in devices.items.getIterator %}
+                <li class="flex flex-row justify-between items-center gap-2">
+                    <span>ID: {{ device.getId() }}</span>
+                    {% if device.isCurrent() %}
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5" />
+                        </svg>
+                    {% endif %}
+                </li>
+            {% endfor %}
+        </ul>
+        {{ include('common/paginator.html.twig', {paginator: tags}) }}
+    </div>
+{% endblock %}
