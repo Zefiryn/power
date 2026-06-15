@@ -63,3 +63,9 @@ Form:
     save_tag: "Zapisz tag"
     save_device: "Zapisz"
     is_current: "Aktywny"
+
+Analysis:
+  header: "Analiza"
+  chart:
+    usage: "Zużycie"
+    usageperhour: "Zużycie na godzinę"

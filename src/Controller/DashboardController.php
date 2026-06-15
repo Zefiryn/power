@@ -22,7 +22,7 @@ class DashboardController extends AbstractController
     #[Template('main/dashboard.html.twig')]
     public function dashboard(ReadingRepository $readingRepository): array
     {
-        $readings = $readingRepository->findLatestRecords(10);
+        $readings = $readingRepository->findLatestRecords(10)->fetchAllAssociative();
         return [
             'readings' => $readings,
             'summary'  => $this->calculateSummary($readings)

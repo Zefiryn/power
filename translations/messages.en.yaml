@@ -60,3 +60,10 @@ Reading:
     sum: "Total usage"
     average: "Average usage"
     median: "Median usage"
+
+
+Analysis:
+  header: "Analysis"
+  chart:
+    usage: "Usage"
+    usageperhour: "Usage per hour"
