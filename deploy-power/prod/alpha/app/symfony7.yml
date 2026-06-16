@@ -7,7 +7,7 @@ restartFpm: false
 targetPath: /home/zefiryn/domains/power.jewula.net/app
 sshAccess: zefiryn@s72.mydevil.net
 gitTreeish: main
-phpVersion: php82
+phpVersion: php84
 cleanOpcache: true
 composerName: composer
 ignore:
