@@ -4,7 +4,6 @@ namespace App\Controller;
 
 use App\Entity\Tag;
 use App\Form\TagType;
-use App\Repository\TagRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bridge\Twig\Attribute\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;

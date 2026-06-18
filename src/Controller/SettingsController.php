@@ -23,8 +23,7 @@ class SettingsController extends AbstractController
         TagRepository $tagRepository,
         DeviceRepository $deviceRepository,
         PaginatorFactory $paginatorFactory,
-    ): Response|array
-    {
+    ): Response|array {
         $tagsPaginator = $paginatorFactory->createPaginator();
         $devicePaginator = $paginatorFactory->createPaginator();
 
@@ -36,7 +35,7 @@ class SettingsController extends AbstractController
 
         return [
             'tags' => $tagsPaginator,
-            'devices' => $devicePaginator
+            'devices' => $devicePaginator,
         ];
     }
 }

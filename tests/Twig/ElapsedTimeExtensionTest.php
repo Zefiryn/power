@@ -1,10 +1,10 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Tests\Twig;
 
 use App\Twig\ElapsedTimeExtension;
-use DateInterval;
 use PHPUnit\Framework\TestCase;
 use Twig\TwigFilter;
 
@@ -25,7 +25,7 @@ class ElapsedTimeExtensionTest extends TestCase
     /**
      * @dataProvider provideElapsedTimeValues
      */
-    public function testFormatElapsedTimeWithScalarValues(int|string|DateInterval $seconds, string $expected): void
+    public function testFormatElapsedTimeWithScalarValues(int|string|\DateInterval $seconds, string $expected): void
     {
         $extension = new ElapsedTimeExtension();
 
@@ -34,7 +34,6 @@ class ElapsedTimeExtensionTest extends TestCase
 
     public function provideElapsedTimeValues(): iterable
     {
-
         yield 'zero seconds' => [0, '0:00'];
         yield 'less than one minute rounds up to one minute' => [59, '0:01'];
         yield 'exactly one hour' => [3600, '1:00'];

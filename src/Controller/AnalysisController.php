@@ -3,7 +3,6 @@
 namespace App\Controller;
 
 use App\Repository\ReadingRepository;
-use App\Utils\PaginatorFactory;
 use Symfony\Bridge\Twig\Attribute\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -15,19 +14,14 @@ use Symfony\UX\Chartjs\Model\Chart;
 
 class AnalysisController extends AbstractController
 {
-    /**
-     * @param ChartBuilderInterface $chartBuilder
-     * @return Response
-     */
     #[Route('/{_locale}/analysis', name: 'analysis')]
     #[Template('analysis/index.html.twig')]
     public function index(
         ChartBuilderInterface $chartBuilder,
         ReadingRepository $readingRepository,
         TranslatorInterface $translator,
-        Request $request
-    ): Response
-    {
+        Request $request,
+    ): Response {
         $page = $request->query->getInt('page', 1);
         $chartData = $this->prepareData($readingRepository, $page);
         $chart = $chartBuilder->createChart(Chart::TYPE_BAR);
@@ -40,7 +34,7 @@ class AnalysisController extends AbstractController
                     'borderColor' => 'rgb(255, 99, 132)',
                     'data' => array_column($chartData, 'usage'),
                     'order' => 1,
-                    'yAxisID' => 'usage'
+                    'yAxisID' => 'usage',
                 ],
                 [
                     'label' => $translator->trans('Analysis.chart.usageperhour'),
@@ -49,8 +43,8 @@ class AnalysisController extends AbstractController
                     'data' => array_column($chartData, 'hourly'),
                     'type' => 'line',
                     'order' => 0,
-                    'yAxisID' => 'hourly'
-                ]
+                    'yAxisID' => 'hourly',
+                ],
             ],
         ]);
         $chart->setOptions([
@@ -67,15 +61,15 @@ class AnalysisController extends AbstractController
                     'position' => 'right',
                     'grid' => [
                         'drawOnChartArea' => false,
-                    ]
-                ]
-            ]
+                    ],
+                ],
+            ],
         ]);
 
         return $this->render('analysis/index.html.twig', [
             'chart' => $chart,
             'page' => $page,
-            'max' => ceil($readingRepository->recordSummaryCount()/50)
+            'max' => ceil($readingRepository->recordSummaryCount() / 50),
         ]);
     }
 
@@ -91,11 +85,11 @@ class AnalysisController extends AbstractController
                     $currentDate = new \DateTime($reading['date']);
                     $prevDate = new \DateTime($readings[$idx - 1]['date']);
                     $interval = $prevDate->diff($currentDate);
-                    $daysDiff = (int)$interval->format('%a');
+                    $daysDiff = (int) $interval->format('%a');
                     if ($daysDiff > 1) {
                         $usage = $reading['usage'] / $daysDiff;
-                        $hourly  = ($reading['time'] > 0 ? ($reading['usage']/$reading['time'])*360 : 0) / $daysDiff;
-                        for ($i = 0; $i < $daysDiff; $i++) {
+                        $hourly = ($reading['time'] > 0 ? ($reading['usage'] / $reading['time']) * 360 : 0) / $daysDiff;
+                        for ($i = 0; $i < $daysDiff; ++$i) {
                             $targetDate = clone $prevDate;
                             if ($i > 0) {
                                 $targetDate->modify("-$i day");
@@ -108,8 +102,8 @@ class AnalysisController extends AbstractController
                     }
                 }
             }
-            $chartData[$reading['date']]['usage'] = sprintf('%.1f', $reading['usage']/10);
-            $chartData[$reading['date']]['hourly'] = $reading['time'] > 0 ? ($reading['usage']/$reading['time'])*360 : 0;
+            $chartData[$reading['date']]['usage'] = sprintf('%.1f', $reading['usage'] / 10);
+            $chartData[$reading['date']]['hourly'] = $reading['time'] > 0 ? ($reading['usage'] / $reading['time']) * 360 : 0;
         }
 
         return $chartData;

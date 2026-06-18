@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Twig;
@@ -25,6 +26,6 @@ class ElapsedTimeExtension extends AbstractExtension
         $hours = floor($seconds / 3600);
         $minutes = ceil(ceil($seconds - ($hours * 3600)) / 60);
 
-        return implode(':', [$hours, $minutes < 10 ? '0' . $minutes : $minutes]);
+        return implode(':', [$hours, $minutes < 10 ? '0'.$minutes : $minutes]);
     }
 }

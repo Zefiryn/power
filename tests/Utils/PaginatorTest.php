@@ -1,11 +1,11 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Tests\Utils;
 
 use App\Tests\Fixtures\Entity\TestPaginatorItem;
 use App\Utils\Paginator;
-use DivisionByZeroError;
 use Doctrine\DBAL\DriverManager;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\ORMSetup;
@@ -22,7 +22,7 @@ final class PaginatorTest extends KernelTestCase
         self::bootKernel();
 
         $config = ORMSetup::createAttributeMetadataConfiguration(
-            paths: [self::getContainer()->getParameter('kernel.project_dir') . '/tests/Fixtures/Entity'],
+            paths: [self::getContainer()->getParameter('kernel.project_dir').'/tests/Fixtures/Entity'],
             isDevMode: true,
         );
 
@@ -39,7 +39,7 @@ final class PaginatorTest extends KernelTestCase
 
         for ($i = 1; $i <= 25; ++$i) {
             $item = new TestPaginatorItem();
-            $item->setName('Item ' . $i);
+            $item->setName('Item '.$i);
             $this->entityManager->persist($item);
         }
 
@@ -78,7 +78,7 @@ final class PaginatorTest extends KernelTestCase
 
     public function testPaginateWithZeroLimitThrowsDivisionByZeroError(): void
     {
-        $this->expectException(DivisionByZeroError::class);
+        $this->expectException(\DivisionByZeroError::class);
 
         $queryBuilder = $this->createQueryBuilder();
         (new Paginator())->paginate($queryBuilder, page: 0, limit: 0);

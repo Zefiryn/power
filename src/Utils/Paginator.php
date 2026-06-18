@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Utils;
@@ -26,7 +27,7 @@ class Paginator
 
         $paginator
             ->getQuery()
-            ->setFirstResult(max(0,$limit * ($page - 1) - $hideNumber))
+            ->setFirstResult(max(0, $limit * ($page - 1) - $hideNumber))
             ->setMaxResults($limit);
 
         $this->total = $paginator->count();

@@ -31,9 +31,6 @@ class ReadingRepository extends ServiceEntityRepository
     }
 
     /**
-     * @param int $limit
-     * @param int $page
-     * @return Result
      * @throws Exception
      */
     public function findLatestRecords(int $limit, int $page = 1): Result

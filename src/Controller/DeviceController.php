@@ -3,10 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Device;
-use App\Entity\Tag;
 use App\Form\DeviceType;
-use App\Form\TagType;
-use App\Repository\TagRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bridge\Twig\Attribute\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -32,7 +29,7 @@ class DeviceController extends AbstractController
             $entityManager->persist($device);
             $entityManager->flush();
             if ($device->isCurrent()) {
-               $entityManager->getRepository(Device::class)->resetCurrentDevices($device->getId());
+                $entityManager->getRepository(Device::class)->resetCurrentDevices($device->getId());
             }
 
             return $this->redirectToRoute('settings');

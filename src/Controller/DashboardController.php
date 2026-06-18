@@ -4,11 +4,9 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
-use App\Repository\DeviceRepository;
 use App\Repository\ReadingRepository;
 use Symfony\Bridge\Twig\Attribute\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 
@@ -23,15 +21,17 @@ class DashboardController extends AbstractController
     public function dashboard(ReadingRepository $readingRepository): array
     {
         $readings = $readingRepository->findLatestRecords(10)->fetchAllAssociative();
+
         return [
             'readings' => $readings,
-            'summary'  => $this->calculateSummary($readings)
+            'summary' => $this->calculateSummary($readings),
         ];
     }
 
     /**
      * @param array<int, mixed> $readings
-     * @return array<string, double>
+     *
+     * @return array<string, float>
      */
     private function calculateSummary(array $readings): array
     {
@@ -40,15 +40,16 @@ class DashboardController extends AbstractController
         });
         $itemCount = count($readings);
         $sum = array_sum(array_column($readings, 'usage'));
-        if ($itemCount % 2 === 0) {
-            $median = $readings[(int)ceil($itemCount / 2)]['usage'];
+        if (0 === $itemCount % 2) {
+            $median = $readings[(int) ceil($itemCount / 2)]['usage'];
         } else {
             $median = ($readings[($itemCount / 2) - 1]['usage'] + $readings[($itemCount / 2) + 1]['usage']) / 2;
         }
+
         return [
-            'avg'    => $sum / $itemCount,
+            'avg' => $sum / $itemCount,
             'median' => $median,
-            'sum'    => $sum
+            'sum' => $sum,
         ];
     }
 }

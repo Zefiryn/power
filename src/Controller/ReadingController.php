@@ -27,15 +27,14 @@ class ReadingController extends AbstractController
     public function index(
         Request $request,
         ReadingRepository $readingRepository,
-        PaginatorFactory $paginatorFactory
-    ): array
-    {
+        PaginatorFactory $paginatorFactory,
+    ): array {
         $paginator = $paginatorFactory->createPaginator();
         $records = $readingRepository->findRecords();
         $paginator->paginate($records, max(1, $request->query->getInt('page', 1)), 21, true);
 
         return [
-            'paginator' => $paginator
+            'paginator' => $paginator,
         ];
     }
 
@@ -48,6 +47,7 @@ class ReadingController extends AbstractController
     {
         $reading = new Reading();
         $reading->setDevice($entityManager->getRepository(Device::class)->findOneBy(['isCurrent' => true]));
+
         return $this->prepareAndHandleReadingForm($reading, $request, $entityManager);
     }
 
@@ -66,6 +66,7 @@ class ReadingController extends AbstractController
         if (!$reading) {
             return $this->redirectToRoute('readings');
         }
+
         return $this->prepareAndHandleReadingForm($reading, $request, $entityManager);
     }
 
@@ -85,12 +86,6 @@ class ReadingController extends AbstractController
         return $this->redirectToRoute('readings');
     }
 
-    /**
-     * @param Reading $reading
-     * @param Request $request
-     * @param EntityManagerInterface $entityManager
-     * @return array|RedirectResponse
-     */
     protected function prepareAndHandleReadingForm(Reading $reading, Request $request, EntityManagerInterface $entityManager): array|RedirectResponse
     {
         $form = $this->createForm(ReadingType::class, $reading);
@@ -107,6 +102,6 @@ class ReadingController extends AbstractController
             return $this->redirectToRoute('dashboard');
         }
 
-        return ['form' => $form, 'is_edit' => !!$request->attributes->get('id')];
+        return ['form' => $form, 'is_edit' => (bool) $request->attributes->get('id')];
     }
 }
