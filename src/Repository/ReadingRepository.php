@@ -60,13 +60,10 @@ class ReadingRepository extends ServiceEntityRepository
         return $connection->executeQuery(
             'SELECT count(*) FROM (SELECT
                     (reading.date::date) AS date,
-                    MAX(reading.value) AS value,
-                    COALESCE(MAX(reading.value) -  LEAD(MAX(reading.value)) OVER (PARTITION BY reading.device_id ORDER BY reading.date::date DESC), 0) AS usage,
-                    COALESCE(EXTRACT(EPOCH FROM (MAX(reading.date) -  LEAD(MAX(reading.date)) OVER (PARTITION BY reading.device_id ORDER BY reading.date::date DESC))), 0) AS time,
                     reading.device_id
                 FROM reading
                 GROUP BY reading.device_id, reading.date::date 
-                ORDER BY reading.date::date DESC) as recrods',
+                ) as recrods',
         )->fetchNumeric()[0];
     }
 }
