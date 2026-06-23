@@ -9,6 +9,7 @@
     </thead>
     <tbody class="bg-zinc-100">
     {% set nextIterator = 1 %}
+    {% set READING_DECIMAL_DIVISION = constant('App\\Entity\\Reading::DECIMAL_DIVISION')  %}
     {% for reading in readings %}
         {% if loop.last %}
         {% else %}
@@ -28,13 +29,13 @@
                     {% if loop.first == false %}border-t border-stone-300{% endif %}
                     {% if loop.index is divisible by(2) %}bg-[#e4dfdb]{% endif %} px-4 py-2
                 ">
-                    {{ '%.1f'|format(reading.getValue() / 10) }}
+                    {{ '%.1f'|format(reading.getValue() / READING_DECIMAL_DIVISION) }}
                 </td>
                 <td class="
                     {% if loop.first == false %}border-t border-stone-300{% endif %}
                     {% if loop.index is divisible by(2) %}bg-[#e4dfdb]{% endif %} px-4 py-2
                 ">
-                    <span class="inline-block">{{ previousReading ? (reading.getValue() - previousReading.getValue()) / 10 : '&mdash;' }}<span class="text-[0.7rem]">kWh</span></span>
+                    <span class="inline-block">{{ previousReading ? (reading.getValue() - previousReading.getValue()) / READING_DECIMAL_DIVISION : '&mdash;' }}<span class="text-[0.7rem]">kWh</span></span>
                 </td>
                 <td class="
                     {% if loop.first == false %}border-t border-stone-300{% endif %}

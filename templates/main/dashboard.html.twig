@@ -1,6 +1,7 @@
 {% extends 'layout/layout.html.twig' %}
 
 {% block content %}
+    {% set READING_DECIMAL_DIVISION = constant('App\\Entity\\Reading::DECIMAL_DIVISION')  %}
     <div class="pt-14 px-2 lg:pt-10 lg:px-0 text-center w-full lg:w-max lg:min-w-[600px] mx-auto">
         <div class="flex flex-row justify-between gap-[100px] items-center mb-5">
             <h2 class="text-2xl">{{ 'Dashboard.header'|trans }}</h2>
@@ -35,7 +36,7 @@
                     ">
                         {% if reading.usage %}
                         <div>
-                            <span class="inline-block">{{ reading.usage ? reading.usage / 10 : '&mdash;' }}<span class="text-[0.7rem]">kWh</span></span>
+                            <span class="inline-block">{{ reading.usage ? reading.usage / READING_DECIMAL_DIVISION : '&mdash;' }}<span class="text-[0.7rem]">kWh</span></span>
                         </div>
                         {% endif %}
                     </td>
@@ -50,7 +51,7 @@
                             </span>
                             <span class="text-[0.8rem] block">
                                 {{ 'Reading.day_average'|trans }}:
-                                {{ ((reading.usage/reading.time)*360)|number_format(2)  }}<span class="text-[0.7rem]">kWh</span>
+                                {{ (((reading.usage/READING_DECIMAL_DIVISION)/reading.time)*3600)|number_format(2)  }}<span class="text-[0.7rem]">kWh</span>
                             </span>
                         </div>
                         {% endif %}
@@ -65,21 +66,21 @@
                 <li>
                     <span class="text-sm">{{ 'Reading.summary.sum'|trans }}:</span>
                     <span class="font-bold font-['Montserrat'] inline-block w-[140px] lg:w-[90px] w-content">
-                        {{ summary.sum / 10 }}
+                        {{ summary.sum / READING_DECIMAL_DIVISION }}
                         <span class="text-[0.7rem] font-['Comfortaa'] font-normal">kWh</span>
                     </span>
                 </li>
                 <li>
                     <span class="text-sm">{{ 'Reading.summary.average'|trans }}:</span>
                     <span class="font-bold font-['Montserrat'] inline-block w-[140px] lg:w-[90px] w-content">
-                        {{ summary.avg / 10 }}
+                        {{ summary.avg / READING_DECIMAL_DIVISION }}
                         <span class="text-[0.7rem] font-['Comfortaa'] font-normal">kWh</span>
                     </span>
                 </li>
                 <li>
                     <span class="text-sm">{{ 'Reading.summary.median'|trans }}:</span>
                     <span class="font-bold font-['Montserrat'] inline-block w-[140px] lg:w-[90px] w-content">
-                        {{ summary.median / 10 }}
+                        {{ summary.median / READING_DECIMAL_DIVISION }}
                         <span class="text-[0.7rem] font-['Comfortaa'] font-normal">kWh</span>
                     </span>
                 </li>
