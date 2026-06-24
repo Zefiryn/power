@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
+use App\Model\ReadingDate;
 use App\Repository\ReadingRepository;
 use Symfony\Bridge\Twig\Attribute\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -20,7 +21,7 @@ class DashboardController extends AbstractController
     #[Template('main/dashboard.html.twig')]
     public function dashboard(ReadingRepository $readingRepository): array
     {
-        $readings = $readingRepository->findLatestRecords(10)->fetchAllAssociative();
+        $readings = $readingRepository->findLatestRecords(10);
 
         return [
             'readings' => $readings,
@@ -35,15 +36,15 @@ class DashboardController extends AbstractController
      */
     private function calculateSummary(array $readings): array
     {
-        usort($readings, function (array $a, array $b) {
-            return $a['usage'] <=> $b['usage'];
+        usort($readings, function (ReadingDate $a, ReadingDate $b) {
+            return $a->usage <=> $b->usage;
         });
         $itemCount = count($readings);
         $sum = array_sum(array_column($readings, 'usage'));
         if (0 === $itemCount % 2) {
-            $median = $readings[(int) ceil($itemCount / 2)]['usage'];
+            $median = $readings[(int) ceil($itemCount / 2)]->usage;
         } else {
-            $median = ($readings[($itemCount / 2) - 1]['usage'] + $readings[($itemCount / 2) + 1]['usage']) / 2;
+            $median = ($readings[($itemCount / 2) - 1]->usage + $readings[($itemCount / 2) + 1]->usage) / 2;
         }
 
         return [

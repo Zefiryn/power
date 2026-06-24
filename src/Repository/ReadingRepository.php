@@ -3,7 +3,9 @@
 namespace App\Repository;
 
 use App\Entity\Reading;
+use App\Model\ReadingDate;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\Common\Collections\Order;
 use Doctrine\DBAL\Exception;
 use Doctrine\DBAL\Result;
 use Doctrine\Persistence\ManagerRegistry;
@@ -31,15 +33,17 @@ class ReadingRepository extends ServiceEntityRepository
     }
 
     /**
-     * @throws Exception
+     * @return ReadingDate[]
+     * @throws \Doctrine\DBAL\Exception
      */
-    public function findLatestRecords(int $limit, int $page = 1): Result
+    public function findLatestRecords(int $limit, int $page = 1): array
     {
         $connection = $this->getEntityManager()->getConnection();
 
-        return $connection->executeQuery(
-            'SELECT
+        $result = $connection->executeQuery(
+            "SELECT
                     (reading.date::date) AS date,
+                    MAX(reading.date) AS full_date,
                     MAX(reading.value) AS value,
                     COALESCE(MAX(reading.value) -  LEAD(MAX(reading.value)) OVER (PARTITION BY reading.device_id ORDER BY reading.date::date DESC), 0) AS usage,
                     COALESCE(EXTRACT(EPOCH FROM (MAX(reading.date) -  LEAD(MAX(reading.date)) OVER (PARTITION BY reading.device_id ORDER BY reading.date::date DESC))), 0) AS time,
@@ -48,9 +52,11 @@ class ReadingRepository extends ServiceEntityRepository
                 GROUP BY reading.device_id, reading.date::date 
                 ORDER BY reading.date::date DESC
                 offset :offset
-                limit :limit',
+                limit :limit",
             ['limit' => $limit, 'offset' => ($page * $limit) - $limit]
         );
+
+        return iterator_to_array($this->createDTOResult($result));
     }
 
     public function recordSummaryCount(): int
@@ -59,11 +65,20 @@ class ReadingRepository extends ServiceEntityRepository
 
         return $connection->executeQuery(
             'SELECT count(*) FROM (SELECT
-                    (reading.date::date) AS date,
-                    reading.device_id
+                    (reading.date::date) AS date
                 FROM reading
                 GROUP BY reading.device_id, reading.date::date 
                 ) as recrods',
         )->fetchNumeric()[0];
+    }
+
+    /**
+     * @throws Exception
+     */
+    protected function createDTOResult(Result $result): \Generator
+    {
+        foreach ($result->iterateAssociative() as $result) {
+            yield new ReadingDate(...$result);
+        }
     }
 }

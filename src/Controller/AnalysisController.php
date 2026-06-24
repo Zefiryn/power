@@ -2,8 +2,8 @@
 
 namespace App\Controller;
 
+use App\Entity\Reading;
 use App\Repository\ReadingRepository;
-use Symfony\Bridge\Twig\Attribute\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -15,7 +15,6 @@ use Symfony\UX\Chartjs\Model\Chart;
 class AnalysisController extends AbstractController
 {
     #[Route('/{_locale}/analysis', name: 'analysis')]
-    #[Template('analysis/index.html.twig')]
     public function index(
         ChartBuilderInterface $chartBuilder,
         ReadingRepository $readingRepository,
@@ -75,35 +74,35 @@ class AnalysisController extends AbstractController
 
     protected function prepareData(ReadingRepository $readingRepository, int $page): array
     {
-        $readings = $readingRepository->findLatestRecords(50, $page)->fetchAllAssociative();
+        $readings = $readingRepository->findLatestRecords(50, $page);
 
         $chartData = [];
         foreach ($readings as $idx => $reading) {
             if ($idx > 0) {
                 $prevReading = $readings[$idx - 1];
-                if ($prevReading['device_id'] === $reading['device_id']) {
-                    $currentDate = new \DateTime($reading['date']);
-                    $prevDate = new \DateTime($readings[$idx - 1]['date']);
+                if ($prevReading->device_id === $reading->device_id) {
+                    $currentDate = new \DateTime($reading->full_date);
+                    $prevDate = new \DateTime($readings[$idx - 1]->full_date);
                     $interval = $prevDate->diff($currentDate);
                     $daysDiff = (int) $interval->format('%a');
                     if ($daysDiff > 1) {
-                        $usage = $reading['usage'] / $daysDiff;
-                        $hourly = ($reading['time'] > 0 ? ($reading['usage'] / $reading['time']) * 360 : 0) / $daysDiff;
+                        $usage = $reading->usage / $daysDiff;
+                        $hourly = ($reading->time > 0 ? (($reading->usage / Reading::DECIMAL_DIVISION) / $reading->time) * 3600 : 0) / $daysDiff;
                         for ($i = 0; $i < $daysDiff; ++$i) {
                             $targetDate = clone $prevDate;
                             if ($i > 0) {
                                 $targetDate->modify("-$i day");
                             }
                             $dateStr = $targetDate->format('Y-m-d');
-                            $chartData[$dateStr]['usage'] = sprintf('%.1f', $usage / 10);
+                            $chartData[$dateStr]['usage'] = sprintf('%.1f', $usage / Reading::DECIMAL_DIVISION);
                             $chartData[$dateStr]['hourly'] = $hourly;
                             continue;
                         }
                     }
                 }
             }
-            $chartData[$reading['date']]['usage'] = sprintf('%.1f', $reading['usage'] / 10);
-            $chartData[$reading['date']]['hourly'] = $reading['time'] > 0 ? ($reading['usage'] / $reading['time']) * 360 : 0;
+            $chartData[$reading->date]['usage'] = sprintf('%.1f', $reading->usage / Reading::DECIMAL_DIVISION);
+            $chartData[$reading->date]['hourly'] = $reading->time > 0 ? (($reading->usage / Reading::DECIMAL_DIVISION) / $reading->time) * 3600 : 0;
         }
 
         return $chartData;

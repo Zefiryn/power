@@ -21,8 +21,8 @@
                         <span class="sr-only">{{ "Paginator.previous"|trans }}</span>
                     </a>
                     <span class="flex-shrink-0 mx-1 text-sm font-medium space-x-0.5 rtl:space-x-reverse">
-            {{ "Paginator.page"|trans({'%current%': page, '%last%': max}) }}
-        </span>
+                        {{ "Paginator.page"|trans({'%current%': page, '%last%': max}) }}
+                    </span>
                     <a href="{{ path(_currentRoute, _currentParams|merge({page: min(max, page + 1)}))}}"
                        class="inline-flex items-center justify-center h-8 px-1 w-10 rounded-e-lg bg-stone-800 hover:bg-stone-600 focus:outline-none focus:ring-2 focus:ring-gray-800">
                         <svg class="w-6 h-2 rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
