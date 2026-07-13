@@ -21,8 +21,17 @@ class AnalysisController extends AbstractController
         TranslatorInterface $translator,
         Request $request,
     ): Response {
-        $page = $request->query->getInt('page', 1);
-        $chartData = $this->prepareData($readingRepository, $page);
+        $today = new \DateTime('2026-03-25');
+        $endDate = $request->query->get('end_date') ?: $today->format('Y-m-d');
+
+        $startDate = $request->query->get('start_date');
+        if (!$startDate) {
+            $date = new \DateTime($endDate);
+            $date->modify('-30 days');
+            $startDate = $date->format('Y-m-d');
+        }
+
+        $chartData = $this->prepareData($readingRepository, $startDate, $endDate);
         $chart = $chartBuilder->createChart(Chart::TYPE_BAR);
         $chart->setData([
             'labels' => array_keys($chartData),
@@ -67,17 +76,21 @@ class AnalysisController extends AbstractController
 
         return $this->render('analysis/index.html.twig', [
             'chart' => $chart,
-            'page' => $page,
+            'start_date' => $startDate,
+            'end_date' => $endDate,
             'max' => ceil($readingRepository->recordSummaryCount() / 50),
         ]);
     }
 
-    protected function prepareData(ReadingRepository $readingRepository, int $page): array
+    protected function prepareData(ReadingRepository $readingRepository, string $startDate, string $endDate): array
     {
-        $readings = $readingRepository->findLatestRecords(50, $page);
+        $readings = $readingRepository->findByDateRange($startDate, $endDate);
 
         $chartData = [];
         foreach ($readings as $idx => $reading) {
+            if ($idx === 0) {
+                continue;
+            }
             if ($idx > 0) {
                 $prevReading = $readings[$idx - 1];
                 if ($prevReading->device_id === $reading->device_id) {
