@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Tests\Twig;
+namespace App\Tests\Unit\Twig;
 
 use App\Twig\ElapsedTimeExtension;
 use PHPUnit\Framework\TestCase;
@@ -19,7 +19,7 @@ class ElapsedTimeExtensionTest extends TestCase
         self::assertCount(1, $filters);
         self::assertInstanceOf(TwigFilter::class, $filters[0]);
         self::assertSame('elapseTime', $filters[0]->getName());
-        self::assertSame([$extension, 'formatElapsedTime'], $filters[0]->getCallable());
+        self::assertInstanceOf(\Closure::class, $filters[0]->getCallable());
     }
 
     /**

@@ -66,6 +66,14 @@ Form:
 
 Analysis:
   header: "Analiza"
+  week_candles:
+    header: "Świece z tego tygodnia"
+  nav:
+    daily: "Dni"
+    week_candles: "Świece tygodnia"
   chart:
     usage: "Zużycie"
     usageperhour: "Zużycie na godzinę"
+    low_high: "Minimum - maksimum"
+    open_close: "Otwarcie - zamknięcie"
+    close: "Zamknięcie"

@@ -12,7 +12,7 @@ class ElapsedTimeExtension extends AbstractExtension
     public function getFilters(): array
     {
         return [
-            new TwigFilter('elapseTime', [$this, 'formatElapsedTime']),
+            new TwigFilter('elapseTime', $this->formatElapsedTime(...)),
         ];
     }
 

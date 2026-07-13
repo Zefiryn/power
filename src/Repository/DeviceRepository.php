@@ -4,6 +4,7 @@ namespace App\Repository;
 
 use App\Entity\Device;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\Query;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -21,7 +22,7 @@ class DeviceRepository extends ServiceEntityRepository
         parent::__construct($registry, Device::class);
     }
 
-    public function findDevices(): \Doctrine\ORM\Query
+    public function findDevices(): Query
     {
         return $this->createQueryBuilder('d')
             ->orderBy('d.id', 'DESC')

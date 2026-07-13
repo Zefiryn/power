@@ -5,9 +5,7 @@ namespace App\Repository;
 use App\Entity\Reading;
 use App\Model\ReadingDate;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
-use Doctrine\Common\Collections\Order;
 use Doctrine\DBAL\Exception;
-use Doctrine\DBAL\Result;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -34,14 +32,15 @@ class ReadingRepository extends ServiceEntityRepository
 
     /**
      * @return ReadingDate[]
-     * @throws \Doctrine\DBAL\Exception
+     *
+     * @throws Exception
      */
     public function findLatestRecords(int $limit, int $page = 1): array
     {
         $connection = $this->getEntityManager()->getConnection();
 
         $result = $connection->executeQuery(
-            "SELECT
+            'SELECT
                     (reading.date::date) AS date,
                     MAX(reading.date) AS full_date,
                     MAX(reading.value) AS value,
@@ -52,13 +51,18 @@ class ReadingRepository extends ServiceEntityRepository
                 GROUP BY reading.device_id, reading.date::date 
                 ORDER BY reading.date::date DESC
                 offset :offset
-                limit :limit",
+                limit :limit',
             ['limit' => $limit, 'offset' => ($page * $limit) - $limit]
         );
 
-        return iterator_to_array($this->createDTOResult($result));
+        return array_map(function (array $row) {
+            return new ReadingDate(...$row);
+        }, $result->fetchAllAssociative());
     }
 
+    /**
+     * @throws Exception
+     */
     public function recordSummaryCount(): int
     {
         $connection = $this->getEntityManager()->getConnection();
@@ -70,15 +74,5 @@ class ReadingRepository extends ServiceEntityRepository
                 GROUP BY reading.device_id, reading.date::date 
                 ) as recrods',
         )->fetchNumeric()[0];
-    }
-
-    /**
-     * @throws Exception
-     */
-    protected function createDTOResult(Result $result): \Generator
-    {
-        foreach ($result->iterateAssociative() as $result) {
-            yield new ReadingDate(...$result);
-        }
     }
 }

@@ -64,6 +64,14 @@ Reading:
 
 Analysis:
   header: "Analysis"
+  week_candles:
+    header: "This week candles"
+  nav:
+    daily: "Daily"
+    week_candles: "Week candles"
   chart:
     usage: "Usage"
     usageperhour: "Usage per hour"
+    low_high: "Low - high"
+    open_close: "Open - close"
+    close: "Close"

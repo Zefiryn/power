@@ -11,9 +11,6 @@ class ReadingDate
         public float $usage,
         public string $time,
         public int $device_id,
-    )
-    {
-
+    ) {
     }
-
 }

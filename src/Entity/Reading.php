@@ -11,7 +11,7 @@ use Doctrine\ORM\Mapping as ORM;
 #[ORM\Entity(repositoryClass: ReadingRepository::class)]
 class Reading
 {
-    const int DECIMAL_DIVISION = 10;
+    public const int DECIMAL_DIVISION = 10;
 
     #[ORM\Id]
     #[ORM\GeneratedValue(strategy: 'SEQUENCE')]
