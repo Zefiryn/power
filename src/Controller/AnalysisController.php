@@ -7,7 +7,7 @@ use App\Repository\ReadingRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\Routing\Attribute\Route; // Keeping the attribute use as it's standard in newer symfony versions
 use Symfony\Contracts\Translation\TranslatorInterface;
 use Symfony\UX\Chartjs\Builder\ChartBuilderInterface;
 use Symfony\UX\Chartjs\Model\Chart;
@@ -58,23 +58,103 @@ class AnalysisController extends AbstractController
         $chart->setOptions([
             'maintainAspectRatio' => false,
             'scales' => [
-                'usage' => [
-                    'type' => 'linear',
-                    'display' => true,
-                    'position' => 'left',
-                ],
-                'hourly' => [
-                    'type' => 'linear',
-                    'display' => true,
-                    'position' => 'right',
-                    'grid' => [
-                        'drawOnChartArea' => false,
-                    ],
-                ],
+                'usage' => ['type' => 'linear', 'display' => true, 'position' => 'left'],
+                'hourly' => ['type' => 'linear', 'display' => true, 'position' => 'right', 'grid' => ['drawOnChartArea' => false]],
             ],
         ]);
 
         return $this->render('analysis/index.html.twig', [
+            'chart' => $chart,
+            'start_date' => $startDate,
+            'end_date' => $endDate,
+            'max' => ceil($readingRepository->recordSummaryCount() / 50),
+        ]);
+    }
+
+    #[Route('/{_locale}/candle', name: 'candle')]
+    public function candle(
+        ChartBuilderInterface $chartBuilder,
+        ReadingRepository $readingRepository,
+        TranslatorInterface $translator,
+        Request $request
+    ): Response {
+        $today = new \DateTime('2026-03-25');
+        $endDate = $request->query->get('end_date') ?: $today->format('Y-m-d');
+
+        $startDate = $request->query->get('start_date');
+        if (!$startDate) {
+            $date = new \DateTime($endDate);
+            $date->modify('-30 days');
+            $startDate = $date->format('Y-m-d');
+        }
+
+        $chartData = $this->prepareData($readingRepository, $startDate, $endDate);
+
+        // Group data by day of the week index (Monday=0)
+        $dailyGroupedChartData = [];
+        $dayOfWeek = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
+        foreach ($chartData as $date => $data) {
+            $dateTime = \DateTime::createFromFormat('Y-m-d', $date);
+            if ($dateTime) {
+                $dayIndex = $dateTime->format('N')-1;
+                if (!isset($dailyGroupedChartData[$dayIndex])) {
+                    $dailyGroupedChartData[$dayIndex] = [];
+                }
+                $dailyGroupedChartData[$dayIndex][] = (float)$data['usage'];
+            }
+        }
+        $averagePerDay = [];
+        $median = [];
+        foreach ($dayOfWeek as $dayId => $dayName) {
+            $values = $dailyGroupedChartData[$dayId];
+            sort($values);
+            $dailyGroupedChartData[$dayName] = [min($values), max($values)];
+            $averagePerDay[$dayName] = array_sum($values)/count($values);
+            $median[$dayName] = $values[ceil(count($values)/2)];
+            unset($dailyGroupedChartData[$dayId]);
+        }
+
+        $chart = $chartBuilder->createChart(Chart::TYPE_BAR);
+        $chart->setData([
+            'labels' => $dayOfWeek,
+            'datasets' => [
+                [
+                    'label' => $translator->trans('Analysis.chart.range_usage'),
+                    'backgroundColor' => '#5e3c99',
+                    'borderColor' => '#5e3c99',
+                    'data' => $dailyGroupedChartData,
+                    'yAxisID' => 'range',
+                    'order' => 2,
+                ],
+                [
+                    'label' => $translator->trans('Analysis.chart.average'),
+                    'backgroundColor' => '#e66101',
+                    'borderColor' => '#e66101',
+                    'data' => $averagePerDay,
+                    'type' => 'line',
+                    'order' => 1,
+                    'yAxisID' => 'range',
+                ],
+                [
+                    'label' => $translator->trans('Analysis.chart.median'),
+                    'backgroundColor' => '#fdb863',
+                    'borderColor' => '#fdb863',
+                    'data' => $median,
+                    'type' => 'line',
+                    'order' => 0,
+                    'yAxisID' => 'range',
+                ],
+            ],
+        ]);
+
+        $chart->setOptions([
+            'maintainAspectRatio' => false,
+            'scales' => [
+                'range' => ['type' => 'linear', 'display' => true, 'position' => 'left']
+            ],
+        ]);
+
+        return $this->render('analysis/candle.html.twig', [
             'chart' => $chart,
             'start_date' => $startDate,
             'end_date' => $endDate,

@@ -74,6 +74,10 @@ Analysis:
   chart:
     usage: "Zużycie"
     usageperhour: "Zużycie na godzinę"
-    low_high: "Minimum - maksimum"
-    open_close: "Otwarcie - zamknięcie"
-    close: "Zamknięcie"
+    average: 'Średnie zużycie'
+    range_usage: 'Zakres zużycia'
+    median: "Mediana zużycia"
+  start_date: "Początek"
+  end_date: "Koniec"
+  search: "Szukaj"
+

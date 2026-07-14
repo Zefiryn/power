@@ -9,7 +9,7 @@
         "@symfony/ux-turbo": "file:vendor/symfony/ux-turbo/assets",
         "@symfony/webpack-encore": "^4.0.0",
         "autoprefixer": "^10.4.19",
-        "chart.js": "^3.4.1 || ^4.0",
+        "chart.js": "^4.5.1",
         "core-js": "^3.23.0",
         "postcss": "^8.4.38",
         "postcss-loader": "^7.3.4",
