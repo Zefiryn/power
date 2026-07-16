@@ -76,7 +76,7 @@ class AnalysisController extends AbstractController
         ChartBuilderInterface $chartBuilder,
         ReadingRepository $readingRepository,
         TranslatorInterface $translator,
-        Request $request
+        Request $request,
     ): Response {
         $today = new \DateTime('2026-03-25');
         $endDate = $request->query->get('end_date') ?: $today->format('Y-m-d');
@@ -96,11 +96,11 @@ class AnalysisController extends AbstractController
         foreach ($chartData as $date => $data) {
             $dateTime = \DateTime::createFromFormat('Y-m-d', $date);
             if ($dateTime) {
-                $dayIndex = $dateTime->format('N')-1;
+                $dayIndex = $dateTime->format('N') - 1;
                 if (!isset($dailyGroupedChartData[$dayIndex])) {
                     $dailyGroupedChartData[$dayIndex] = [];
                 }
-                $dailyGroupedChartData[$dayIndex][] = (float)$data['usage'];
+                $dailyGroupedChartData[$dayIndex][] = (float) $data['usage'];
             }
         }
         $averagePerDay = [];
@@ -109,8 +109,8 @@ class AnalysisController extends AbstractController
             $values = $dailyGroupedChartData[$dayId];
             sort($values);
             $dailyGroupedChartData[$dayName] = [min($values), max($values)];
-            $averagePerDay[$dayName] = array_sum($values)/count($values);
-            $median[$dayName] = $values[ceil(count($values)/2)];
+            $averagePerDay[$dayName] = array_sum($values) / count($values);
+            $median[$dayName] = $values[ceil(count($values) / 2)];
             unset($dailyGroupedChartData[$dayId]);
         }
 
@@ -150,7 +150,7 @@ class AnalysisController extends AbstractController
         $chart->setOptions([
             'maintainAspectRatio' => false,
             'scales' => [
-                'range' => ['type' => 'linear', 'display' => true, 'position' => 'left']
+                'range' => ['type' => 'linear', 'display' => true, 'position' => 'left'],
             ],
         ]);
 
@@ -168,7 +168,7 @@ class AnalysisController extends AbstractController
 
         $chartData = [];
         foreach ($readings as $idx => $reading) {
-            if ($idx === 0) {
+            if (0 === $idx) {
                 continue;
             }
             if ($idx > 0) {
