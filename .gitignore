@@ -5,6 +5,7 @@ vendor/
 .worktrees/
 composer.phar
 .env
+.env.local
 .env.prod
 auth.json
 var/
