@@ -112,7 +112,7 @@ class AnalysisController extends AbstractController
             sort($values);
             $dailyGroupedChartData[$dayName] = [min($values), max($values)];
             $averagePerDay[$dayName] = array_sum($values) / count($values);
-            $median[$dayName] = $values[(int)ceil(count($values) / 2)];
+            $median[$dayName] = $values[(int) ceil(count($values) / 2)];
             unset($dailyGroupedChartData[$dayId]);
         }
 
@@ -182,7 +182,7 @@ class AnalysisController extends AbstractController
                     $daysDiff = (int) $interval->format('%a');
                     if ($daysDiff > 1) {
                         $usage = $reading->usage / $daysDiff;
-                        $hourly = ($reading->time > 0 ? (($reading->usage / Reading::DECIMAL_DIVISION) / (int)$reading->time) * 3600 : 0) / $daysDiff;
+                        $hourly = ($reading->time > 0 ? (($reading->usage / Reading::DECIMAL_DIVISION) / (int) $reading->time) * 3600 : 0) / $daysDiff;
                         for ($i = 0; $i < $daysDiff; ++$i) {
                             $targetDate = clone $prevDate;
                             if ($i > 0) {
@@ -197,7 +197,7 @@ class AnalysisController extends AbstractController
                 }
             }
             $chartData[$reading->date]['usage'] = sprintf('%.1f', $reading->usage / Reading::DECIMAL_DIVISION);
-            $chartData[$reading->date]['hourly'] = $reading->time > 0 ? (($reading->usage / Reading::DECIMAL_DIVISION) / (int)$reading->time) * 3600 : 0;
+            $chartData[$reading->date]['hourly'] = $reading->time > 0 ? (($reading->usage / Reading::DECIMAL_DIVISION) / (int) $reading->time) * 3600 : 0;
         }
 
         return $chartData;

@@ -62,9 +62,12 @@ class ReadingRepository extends ServiceEntityRepository
 
     /**
      * Fetches reading summary records within a specific date range.
-     * @param string $startDate Start date in YYYY-MM-DD format.
-     * @param string $endDate End date in YYYY-MM-DD format.
+     *
+     * @param string $startDate start date in YYYY-MM-DD format
+     * @param string $endDate   end date in YYYY-MM-DD format
+     *
      * @return ReadingDate[]
+     *
      * @throws Exception
      */
     public function findByDateRange(string $startDate, string $endDate): array
