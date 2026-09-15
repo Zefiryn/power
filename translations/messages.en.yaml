@@ -22,6 +22,7 @@ Form:
     save_tag: "Save tag"
     save_device: "Save"
     is_current: "Active"
+    use_decimal: "Shows decimal place"
 
 Dashboard:
   header: "Recent readings"

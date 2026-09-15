@@ -96,6 +96,10 @@ class ReadingController extends AbstractController
             if (!$reading->getDate()) {
                 $reading->setDate(new \DateTime());
             }
+            $device = $reading->getDevice();
+            if ($reading->getId() === null && $device && !$device->useDecimal() && $reading->getValue() !== null) {
+                $reading->setValue($reading->getValue() * Reading::DECIMAL_DIVISION);
+            }
             $entityManager->persist($reading);
             $entityManager->flush();
 

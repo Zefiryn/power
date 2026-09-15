@@ -63,6 +63,7 @@ Form:
     save_tag: "Zapisz tag"
     save_device: "Zapisz"
     is_current: "Aktywny"
+    use_decimal: "Wyświetla miejsce dziesiętne"
 
 Analysis:
   header: "Analiza"

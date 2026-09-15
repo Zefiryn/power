@@ -16,6 +16,9 @@ class DeviceType extends AbstractType
             ->add('is_current', CheckboxType::class, [
                 'required' => false,
             ])
+            ->add('use_decimal', CheckboxType::class, [
+                'required' => false,
+            ])
         ;
     }
 

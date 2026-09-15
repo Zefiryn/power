@@ -20,6 +20,9 @@ class Device
     #[ORM\Column(options: ['default' => true])]
     private bool $isCurrent = true;
 
+    #[ORM\Column(options: ['default' => true])]
+    private bool $useDecimal = true;
+
     /**
      * @var Collection<int, Reading>
      */
@@ -44,6 +47,18 @@ class Device
     public function setIsCurrent(bool $isCurrent): static
     {
         $this->isCurrent = $isCurrent;
+
+        return $this;
+    }
+
+    public function useDecimal(): bool
+    {
+        return $this->useDecimal;
+    }
+
+    public function setUseDecimal(bool $useDecimal): static
+    {
+        $this->useDecimal = $useDecimal;
 
         return $this;
     }
