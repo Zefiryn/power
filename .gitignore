@@ -1,5 +1,8 @@
 vendor/
 .idea/
+.hermes/
+.claude/
+.worktrees/
 composer.phar
 .env
 .env.prod
