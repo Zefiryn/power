@@ -15,6 +15,7 @@ class Device
     #[ORM\GeneratedValue(strategy: 'SEQUENCE')]
     #[ORM\SequenceGenerator(sequenceName: 'devices_id_seq', allocationSize: 1, initialValue: 1)]
     #[ORM\Column]
+    // @phpstan-ignore property.unusedType
     private ?int $id = null;
 
     #[ORM\Column(options: ['default' => true])]

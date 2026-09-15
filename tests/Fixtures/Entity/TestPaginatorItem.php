@@ -13,9 +13,11 @@ class TestPaginatorItem
     #[ORM\Id]
     #[ORM\GeneratedValue(strategy: 'IDENTITY')]
     #[ORM\Column(type: 'integer')]
+    // @phpstan-ignore property.unusedType
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
+    // @phpstan-ignore property.onlyWritten
     private string $name = '';
 
     public function getId(): ?int

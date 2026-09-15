@@ -17,6 +17,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Id]
     #[ORM\GeneratedValue(strategy: 'SEQUENCE')]
     #[ORM\Column]
+    // @phpstan-ignore property.unusedType
     private ?int $id = null;
 
     #[ORM\Column(length: 180)]
