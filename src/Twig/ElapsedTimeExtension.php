@@ -21,7 +21,7 @@ class ElapsedTimeExtension extends AbstractExtension
         if ($seconds instanceof \DateInterval) {
             $reference = new \DateTimeImmutable();
             $endTime = $reference->add($seconds);
-            $seconds = $reference->getTimestamp() - $endTime->getTimestamp();
+            $seconds = abs($endTime->getTimestamp() - $reference->getTimestamp());
         }
         $hours = floor($seconds / 3600);
         $minutes = ceil(ceil($seconds - ($hours * 3600)) / 60);

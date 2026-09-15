@@ -51,6 +51,6 @@ class ElapsedTimeExtensionTest extends TestCase
 
         $result = $extension->formatElapsedTime(new \DateInterval('PT30M'));
 
-        self::assertSame('-1:30', $result);
+        self::assertSame('0:30', $result);
     }
 }
